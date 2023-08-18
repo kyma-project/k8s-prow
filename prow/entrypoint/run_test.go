@@ -144,7 +144,7 @@ fi
 exit 3
 }
 trap cleanup SIGINT SIGTERM EXIT
-sleep infinity &
+sleep 3600 &
 wait`},
 			expectedLog:    "level=error msg=\"Entrypoint received interrupt: terminated\"\nlevel=error msg=\"Process gracefully exited before 15s grace period\"\n",
 			expectedMarker: "3",
@@ -162,7 +162,7 @@ fi
 exit 3
 }
 trap cleanup SIGINT SIGTERM EXIT
-sleep infinity &
+sleep 3600 &
 wait`},
 			expectedLog:    "level=error msg=\"Entrypoint received interrupt: terminated\"\nlevel=error msg=\"Process gracefully exited before 15s grace period\"\n",
 			expectedMarker: "130",

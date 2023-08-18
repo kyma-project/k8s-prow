@@ -232,7 +232,7 @@ function create_prowimagebuilder_yaml() {
   # Create a definitive reference of valid prow components (images) that can be
   # built by prowimagebuilder.
   local tmpfile
-  tmpfile=$(mktemp /tmp/prowimagebuilder.XXXXXX.yaml)
+  tmpfile=$(mktemp /tmp/prowimagebuilder.yaml.XXXXXX)
 
   local contents
 
