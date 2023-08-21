@@ -1,0 +1,23 @@
+prow_components:
+  - ko://k8s.io/test-infra/prow/cmd/branchprotector
+#  - ko://k8s.io/test-infra/prow/cmd/deck
+  - ko://k8s.io/test-infra/prow/cmd/crier
+  - ko://k8s.io/test-infra/prow/cmd/hook
+  - ko://k8s.io/test-infra/prow/cmd/horologium
+  - ko://k8s.io/test-infra/prow/cmd/sinker
+  - ko://k8s.io/test-infra/prow/cmd/status-reconciler
+  - ko://k8s.io/test-infra/prow/cmd/tide
+  - ko://k8s.io/test-infra/prow/cmd/prow-controller-manager
+pod_utils:
+  - ko://k8s.io/test-infra/prow/cmd/clonerefs
+  - ko://k8s.io/test-infra/prow/cmd/entrypoint
+  - ko://k8s.io/test-infra/prow/cmd/initupload
+  - ko://k8s.io/test-infra/prow/cmd/sidecar
+tools:
+  - ko://k8s.io/test-infra/robots/commenter
+  - ko://k8s.io/test-infra/ghproxy
+  - ko://k8s.io/test-infra/label_sync
+  - ko://k8s.io/test-infra/robots/commenter
+  - ko://k8s.io/test-infra/gcsweb/cmd/gcsweb
+  - ko://k8s.io/test-infra/prow/cmd/checkconfig
+  - ko://k8s.io/test-infra/prow/cmd/generic-autobumper
