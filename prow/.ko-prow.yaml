@@ -1,6 +1,6 @@
 prow_components:
   - ko://k8s.io/test-infra/prow/cmd/branchprotector
-#  - ko://k8s.io/test-infra/prow/cmd/deck
+  - ko://k8s.io/test-infra/prow/cmd/deck
   - ko://k8s.io/test-infra/prow/cmd/crier
   - ko://k8s.io/test-infra/prow/cmd/hook
   - ko://k8s.io/test-infra/prow/cmd/horologium
