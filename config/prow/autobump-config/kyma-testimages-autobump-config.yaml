@@ -8,14 +8,13 @@ skipPullRequest: false
 gitHubOrg: "kyma-project"
 gitHubRepo: "k8s-prow"
 remoteName: "test-infra"
-upstreamURLBase: "https://raw.githubusercontent.com/kubernetes/test-infra/master"
+upstreamURLBase: "https://raw.githubusercontent.com/kyma-project/k8s-prow/main"
 includedConfigPaths:
   - "."
 targetVersion: "latest"
 prefixes:
   - name: "testimages"
     prefix: "europe-docker.pkg.dev/kyma-project/prod/testimages/"
-    refConfigFile: "config/prow/cluster/deck_deployment.yaml"
     repo: "https://github.com/kyma-project/test-infra"
     summarise: true
     consistentImages: true
