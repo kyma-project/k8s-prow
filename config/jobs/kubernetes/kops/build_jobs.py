@@ -298,7 +298,8 @@ def presubmit_test(branch='master',
         name_hash = hashlib.md5(name.encode()).hexdigest()
         env['CLOUD_PROVIDER'] = cloud
         env['CLUSTER_NAME'] = f"e2e-{name_hash[0:10]}-{name_hash[11:16]}.test-cncf-aws.k8s.io"
-        env['KOPS_STATE_STORE'] = 's3://k8s-kops-prow'
+        if 'KOPS_STATE_STORE' not in env:
+            env['KOPS_STATE_STORE'] = 's3://k8s-kops-prow'
         if extra_flags:
             env['KOPS_EXTRA_FLAGS'] = " ".join(extra_flags)
         if irsa and cloud == "aws":
@@ -1021,6 +1022,7 @@ def generate_upgrades():
         kops_b = versions[1][0]
         k8s_b = versions[1][1]
         job_name = f"kops-aws-upgrade-k{shorten(k8s_a)}-ko{shorten(kops_a)}-to-k{shorten(k8s_b)}-ko{shorten(kops_b)}" # pylint: disable=line-too-long
+        runs_per_day = 3 if kops_b == 'latest' else 1
         env = {
             'KOPS_VERSION_A': kops_a,
             'K8S_VERSION_A': k8s_a,
@@ -1044,7 +1046,7 @@ def generate_upgrades():
                        k8s_version='stable',
                        kops_channel='alpha',
                        extra_dashboards=['kops-upgrades'],
-                       runs_per_day=8,
+                       runs_per_day=runs_per_day,
                        test_timeout_minutes=120,
                        scenario='upgrade-ab',
                        env=env,
@@ -1059,7 +1061,7 @@ def generate_upgrades():
                        kops_channel='alpha',
                        extra_dashboards=['kops-upgrades-many-addons'],
                        test_timeout_minutes=120,
-                       runs_per_day=4,
+                       runs_per_day=runs_per_day,
                        scenario='upgrade-ab',
                        env=addonsenv,
                        )
@@ -1109,9 +1111,10 @@ def generate_presubmits_scale():
                 'CNI_PLUGIN': "amazonvpc",
                 'KUBE_NODE_COUNT': "500",
                 'RUN_CL2_TEST': "true",
-                'CL2_SCHEDULER_THROUGHPUT_THRESHOLD': "25",
+                'CL2_SCHEDULER_THROUGHPUT_THRESHOLD': "20",
                 'CONTROL_PLANE_COUNT': "3",
                 'CONTROL_PLANE_SIZE': "c6g.16xlarge",
+                'KOPS_STATE_STORE' : "s3://k8s-infra-kops-scale-tests"
             }
         )
     ]

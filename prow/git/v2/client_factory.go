@@ -25,6 +25,7 @@ import (
 	"sync"
 
 	"github.com/sirupsen/logrus"
+	"k8s.io/apimachinery/pkg/util/sets"
 	utilpointer "k8s.io/utils/pointer"
 )
 
@@ -95,10 +96,17 @@ type RepoOpts struct {
 	// FetchCommits list only those commit SHAs which are needed. If the commit
 	// already exists, it is not fetched to save network costs. If FetchCommits
 	// is set, we do not call RemoteUpdate() for the primary clone (git cache).
-	FetchCommits []string
+	FetchCommits sets.Set[string]
+
 	// NoFetchTags determines whether we disable fetching tag objects). Defaults
 	// to false (tag objects are fetched).
 	NoFetchTags bool
+	// PrimaryCloneUpdateCommits are any additional SHAs we need to fetch into
+	// the primary clone to bring it up to speed. This should at least be the
+	// current base branch SHA. Needed when we're using shared objects because
+	// otherwise the primary will slowly get stale with no updates to it after
+	// its initial creation.
+	PrimaryCloneUpdateCommits sets.Set[string]
 }
 
 // Apply allows to use a ClientFactoryOpts as Opt
@@ -327,39 +335,12 @@ func (c *clientFactory) ClientForWithRepoOpts(org, repo string, repoOpts RepoOpt
 	if err != nil {
 		return nil, err
 	}
-	c.masterLock.Lock()
-	if _, exists := c.repoLocks[cacheDir]; !exists {
-		c.repoLocks[cacheDir] = &sync.Mutex{}
-	}
-	c.masterLock.Unlock()
-	c.repoLocks[cacheDir].Lock()
-	defer c.repoLocks[cacheDir].Unlock()
-	if _, err := os.Stat(path.Join(cacheDir, "HEAD")); os.IsNotExist(err) {
-		// we have not yet cloned this repo, we need to do a full clone
-		if err := os.MkdirAll(cacheDir, os.ModePerm); err != nil && !os.IsExist(err) {
-			return nil, err
-		}
-		if err := cacheClientCacher.MirrorClone(); err != nil {
-			return nil, err
-		}
-	} else if err != nil {
-		// something unexpected happened
-		return nil, err
-	} else {
-		// We have cloned the repo previously, but will refresh it. By default
-		// we refresh all refs with a call to `git remote update`.
-		//
-		// This is the default behavior if FetchCommits is empty or nil (i.e.,
-		// when we don't define a targeted list of commits to fetch directly).
-		if len(repoOpts.FetchCommits) == 0 {
-			if err := cacheClientCacher.RemoteUpdate(); err != nil {
-				return nil, err
-			}
-		}
-	}
 
-	// Clone the secondary clone (local clone with checked out files) from the
-	// primary (bare repo).
+	// First create or update the primary clone (in "cacheDir").
+	c.ensureFreshPrimary(cacheDir, cacheClientCacher, repoOpts)
+
+	// Initialize the new derivative repo (secondary clone) from the primary
+	// clone. This is a local clone operation.
 	if err := repoClientCloner.CloneWithRepoOpts(cacheDir, repoOpts); err != nil {
 		return nil, err
 	}
@@ -373,10 +354,10 @@ func (c *clientFactory) ClientForWithRepoOpts(org, repo string, repoOpts RepoOpt
 	// the cacher will run on the primary, not secondary (and without --shared,
 	// this will have no effect on the secondary); we have to handle that case
 	// gracefully (perhaps with some logging also).
-	if len(repoOpts.FetchCommits) > 0 {
+	if repoOpts.FetchCommits.Len() > 0 {
 		// Targeted fetch. Only fetch those commits which we want, and only
 		// if they are missing.
-		if err := ensureCommits(repoClient, repoOpts); err != nil {
+		if err := repoClientCloner.FetchCommits(repoOpts.NoFetchTags, repoOpts.FetchCommits.UnsortedList()); err != nil {
 			return nil, err
 		}
 	}
@@ -384,39 +365,52 @@ func (c *clientFactory) ClientForWithRepoOpts(org, repo string, repoOpts RepoOpt
 	return repoClient, nil
 }
 
-// Clean removes the caches used to generate clients
-func (c *clientFactory) Clean() error {
-	return os.RemoveAll(c.cacheDir)
-}
-
-func ensureCommits(repoClient RepoClient, repoOpts RepoOpts) error {
-	fetchArgs := []string{}
-
-	if repoOpts.NoFetchTags {
-		fetchArgs = append(fetchArgs, "--no-tags")
+func (c *clientFactory) ensureFreshPrimary(cacheDir string, cacheClientCacher cacher, repoOpts RepoOpts) error {
+	// Protect access to the shared repoLocks map.
+	var repoLock *sync.Mutex
+	c.masterLock.Lock()
+	if _, exists := c.repoLocks[cacheDir]; exists {
+		repoLock = c.repoLocks[cacheDir]
+	} else {
+		repoLock = &sync.Mutex{}
+		c.repoLocks[cacheDir] = repoLock
 	}
+	c.masterLock.Unlock()
 
-	// For each commit SHA, check if it already exists. If so, don't bother
-	// fetching it.
-	var missingCommits bool
-	for _, commitSHA := range repoOpts.FetchCommits {
-		if exists, _ := repoClient.ObjectExists(commitSHA); exists {
-			continue
+	repoLock.Lock()
+	defer repoLock.Unlock()
+	if _, err := os.Stat(path.Join(cacheDir, "HEAD")); os.IsNotExist(err) {
+		// we have not yet cloned this repo, we need to do a full clone
+		if err := os.MkdirAll(cacheDir, os.ModePerm); err != nil && !os.IsExist(err) {
+			return err
 		}
-
-		fetchArgs = append(fetchArgs, commitSHA)
-		missingCommits = true
-	}
-
-	// Skip the fetch operation altogether if nothing is missing (we already
-	// fetched everything previously at some point).
-	if !missingCommits {
-		return nil
-	}
-
-	if err := repoClient.Fetch(fetchArgs...); err != nil {
-		return fmt.Errorf("failed to fetch %s: %v", fetchArgs, err)
+		if err := cacheClientCacher.MirrorClone(); err != nil {
+			return err
+		}
+	} else if err != nil {
+		// something unexpected happened
+		return err
+	} else {
+		// We have cloned the repo previously, but will refresh it. By default
+		// we refresh all refs with a call to `git remote update`.
+		//
+		// This is the default behavior if FetchCommits is empty or nil (i.e.,
+		// when we don't define a targeted list of commits to fetch directly).
+		if repoOpts.FetchCommits.Len() == 0 {
+			if err := cacheClientCacher.RemoteUpdate(); err != nil {
+				return err
+			}
+		} else if repoOpts.PrimaryCloneUpdateCommits.Len() > 0 {
+			if err := cacheClientCacher.FetchCommits(repoOpts.NoFetchTags, repoOpts.PrimaryCloneUpdateCommits.UnsortedList()); err != nil {
+				return err
+			}
+		}
 	}
 
 	return nil
+}
+
+// Clean removes the caches used to generate clients
+func (c *clientFactory) Clean() error {
+	return os.RemoveAll(c.cacheDir)
 }
