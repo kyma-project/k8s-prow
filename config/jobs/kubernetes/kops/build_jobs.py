@@ -397,11 +397,11 @@ distro_options = [
 ]
 
 k8s_versions = [
-    "1.23",
     "1.24",
     "1.25",
     "1.26",
     "1.27",
+    "1.28",
 ]
 
 kops_versions = [
@@ -462,7 +462,7 @@ def generate_misc():
                    runs_per_day=24,
                    cloud="aws",
                    # Latest runs with a staging AWS CCM, not available in registry.k8s.io
-                   k8s_version='1.23',
+                   k8s_version='1.28',
                    extra_dashboards=['kops-misc']),
 
         # A one-off scenario testing the artifacts-sandbox.k8s.io mirror
@@ -784,7 +784,7 @@ def generate_misc():
                        "--master-size=c6g.xlarge",
                    ],
                    extra_dashboards=["kops-misc"],
-                   skip_regex=r'\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]|nfs|NFS|Gluster|Services.*rejected.*endpoints|TCP.CLOSE_WAIT|external.IP.is.not.assigned.to.a.node|same.port.number.but.different.protocols|same.hostPort.but.different.hostIP.and.protocol|should.create.a.Pod.with.SCTP.HostPort|Services.should.create.endpoints.for.unready.pods|Services.should.be.able.to.connect.to.terminating.and.unready.endpoints.if.PublishNotReadyAddresses.is.true|should.verify.that.all.nodes.have.volume.limits|In-tree.Volumes|LoadBalancers.should.be.able.to.preserve.UDP.traffic|serve.endpoints.on.same.port.and.different.protocols'), # pylint: disable=line-too-long
+                   skip_regex=r'\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]|nfs|NFS|Gluster|Services.*rejected.*endpoints|TCP.CLOSE_WAIT|external.IP.is.not.assigned.to.a.node|same.port.number.but.different.protocols|same.hostPort.but.different.hostIP.and.protocol|should.create.a.Pod.with.SCTP.HostPort|Services.should.create.endpoints.for.unready.pods|Services.should.be.able.to.connect.to.terminating.and.unready.endpoints.if.PublishNotReadyAddresses.is.true|should.verify.that.all.nodes.have.volume.limits|In-tree.Volumes|LoadBalancers.should.be.able.to.preserve.UDP.traffic|serve.endpoints.on.same.port.and.different.protocols|fallback.to.local.terminating.endpoints.when.there.are.no.ready.endpoints.with.externalTrafficPolicy.Local'), # pylint: disable=line-too-long
 
         build_test(name_override="kops-aws-ipv6-karpenter",
                    distro="u2204arm64",
@@ -800,7 +800,7 @@ def generate_misc():
                        "--master-size=c6g.xlarge",
                    ],
                    extra_dashboards=["kops-misc", "kops-ipv6"],
-                   skip_regex=r'\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]|nfs|NFS|Gluster|Services.*rejected.*endpoints|TCP.CLOSE_WAIT|external.IP.is.not.assigned.to.a.node|same.port.number.but.different.protocols|same.hostPort.but.different.hostIP.and.protocol|should.create.a.Pod.with.SCTP.HostPort|Services.should.create.endpoints.for.unready.pods|Services.should.be.able.to.connect.to.terminating.and.unready.endpoints.if.PublishNotReadyAddresses.is.true|should.verify.that.all.nodes.have.volume.limits|In-tree.Volumes|LoadBalancers.should.be.able.to.preserve.UDP.traffic|serve.endpoints.on.same.port.and.different.protocols|SSH.should.SSH.to.all.nodes.and.run.commands'), # pylint: disable=line-too-long
+                   skip_regex=r'\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]|nfs|NFS|Gluster|Services.*rejected.*endpoints|TCP.CLOSE_WAIT|external.IP.is.not.assigned.to.a.node|same.port.number.but.different.protocols|same.hostPort.but.different.hostIP.and.protocol|should.create.a.Pod.with.SCTP.HostPort|Services.should.create.endpoints.for.unready.pods|Services.should.be.able.to.connect.to.terminating.and.unready.endpoints.if.PublishNotReadyAddresses.is.true|should.verify.that.all.nodes.have.volume.limits|In-tree.Volumes|LoadBalancers.should.be.able.to.preserve.UDP.traffic|serve.endpoints.on.same.port.and.different.protocols|SSH.should.SSH.to.all.nodes.and.run.commands|fallback.to.local.terminating.endpoints.when.there.are.no.ready.endpoints.with.externalTrafficPolicy.Local'), # pylint: disable=line-too-long
 
         # [sig-storage, @jsafrane] A one-off scenario testing SELinux features, because kops
         # is the only way how to get Kubernetes on a Linux with SELinux in enforcing mode in CI.
@@ -839,7 +839,7 @@ def generate_misc():
 ################################
 def generate_conformance():
     results = []
-    for version in ['1.27', '1.26']:
+    for version in ['1.28', '1.27']:
         results.append(
             build_test(
                 k8s_version=version,
@@ -969,44 +969,45 @@ def generate_network_plugins():
 ################################
 def generate_upgrades():
 
-    kops25 = 'v1.25.4'
     kops26 = 'v1.26.4'
-    kops27 = 'v1.27.0-beta.3'
+    kops27 = 'v1.27.1'
+    kops28 = 'v1.28.0-beta.1'
 
     versions_list = [
         #  kops    k8s          kops      k8s
-        # 1.26 release branch
-        ((kops25, 'v1.20.6'), ('1.26', 'v1.21.7')),
-        ((kops25, 'v1.25.0'), ('1.26', 'v1.26.0')),
-        ((kops26, 'v1.21.14'), ('1.26', 'v1.22.13')),
-        ((kops26, 'v1.26.0'), ('1.26', 'v1.26.0')),
         # 1.27 release branch
-        ((kops25, 'v1.21.14'), ('1.27', 'v1.22.17')),
-        ((kops25, 'v1.25.11'), ('1.27', 'v1.26.6')),
         ((kops26, 'v1.21.14'), ('1.27', 'v1.22.17')),
         ((kops26, 'v1.26.6'), ('1.27', 'v1.27.3')),
         ((kops27, 'v1.22.17'), ('1.27', 'v1.23.17')),
-        ((kops27, 'v1.27.3'), ('1.27', 'v1.27.3')),
-        # 1.25 upgrade to latest
-        ((kops25, 'v1.24.0'), ('latest', 'v1.25.0')),
-        ((kops25, 'v1.25.0'), ('latest', 'v1.26.0')),
+        ((kops27, 'v1.27.2'), ('1.27', 'v1.27.3')),
+        # 1.28 release branch
+        ((kops26, 'v1.22.17'), ('1.28', 'v1.23.17')),
+        ((kops26, 'v1.27.3'), ('1.28', 'v1.27.3')),
+        ((kops27, 'v1.22.17'), ('1.28', 'v1.23.17')),
+        ((kops27, 'v1.27.3'), ('1.28', 'v1.28.1')),
+        ((kops28, 'v1.23.17'), ('1.28', 'v1.24.17')),
+        ((kops28, 'v1.28.0'), ('1.28', 'v1.28.1')),
         # 1.26 upgrade to latest
-        ((kops26, 'v1.22.0'), ('latest', 'v1.23.0')),
-        ((kops26, 'v1.24.0'), ('latest', 'v1.25.0')),
-        ((kops26, 'v1.25.0'), ('latest', 'v1.26.0')),
         ((kops26, 'v1.26.0'), ('latest', 'v1.27.0')),
+        ((kops26, 'v1.26.0'), ('latest', 'v1.28.0')),
         # 1.27 upgrade to latest
         ((kops27, 'v1.23.0'), ('latest', 'v1.24.0')),
         ((kops27, 'v1.24.0'), ('latest', 'v1.25.0')),
         ((kops27, 'v1.25.0'), ('latest', 'v1.26.0')),
         ((kops27, 'v1.26.0'), ('latest', 'v1.27.0')),
         ((kops27, 'v1.27.0'), ('latest', 'v1.27.0')),
+        # 1.28 upgrade to latest
+        ((kops28, 'v1.24.0'), ('latest', 'v1.25.0')),
+        ((kops28, 'v1.25.0'), ('latest', 'v1.26.0')),
+        ((kops28, 'v1.26.0'), ('latest', 'v1.27.0')),
+        ((kops28, 'v1.27.0'), ('latest', 'v1.28.0')),
+        ((kops28, 'v1.28.0'), ('latest', 'v1.28.0')),
         # we should have an upgrade test for every supported K8s version
-        (('latest', 'v1.27.0'), ('latest', 'latest')),
+        (('latest', 'v1.28.0'), ('latest', 'latest')),
+        (('latest', 'v1.27.0'), ('latest', 'v1.28.0')),
         (('latest', 'v1.26.0'), ('latest', 'v1.27.0')),
         (('latest', 'v1.25.0'), ('latest', 'v1.26.0')),
         (('latest', 'v1.24.0'), ('latest', 'v1.25.0')),
-        (('latest', 'v1.23.0'), ('latest', 'v1.24.0')),
         # kOps latest should always be able to upgrade from stable to latest and stable to ci
         (('latest', 'stable'), ('latest', 'latest')),
         (('latest', 'stable'), ('latest', 'ci')),
@@ -1155,7 +1156,7 @@ def generate_versions():
             publish_version_marker='gs://kops-ci/bin/latest-ci-green.txt',
         )
     ]
-    for version in ['1.27', '1.26', '1.25', '1.24', '1.23']:
+    for version in ['1.28', '1.27', '1.26', '1.25', '1.24']:
         results.append(
             build_test(
                 k8s_version=version,
@@ -1173,7 +1174,7 @@ def generate_versions():
 ######################
 def generate_pipeline():
     results = []
-    for version in ['master', '1.27', '1.26']:
+    for version in ['master', '1.28', '1.27']:
         branch = version if version == 'master' else f"release-{version}"
         publish_version_marker = f"gs://kops-ci/markers/{branch}/latest-ci-updown-green.txt"
         kops_version = f"https://storage.googleapis.com/k8s-staging-kops/kops/releases/markers/{branch}/latest-ci.txt" # pylint: disable=line-too-long
@@ -1499,17 +1500,17 @@ def generate_presubmits_e2e():
             tab_name='e2e-aws-1-24',
             always_run=False,
         ),
-        presubmit_test(
-            branch='master',
-            k8s_version='1.23',
-            kops_channel='alpha',
-            name='pull-kops-latest-e2e-aws-k8s-1-23',
-            networking='calico',
-            extra_flags=['--set=cluster.spec.cloudControllerManager.cloudProvider=aws'],
-            tab_name='e2e-aws-1-23',
-            always_run=False,
-        ),
 
+        presubmit_test(
+            distro='channels',
+            branch='release-1.28',
+            k8s_version='1.28',
+            kops_channel='alpha',
+            name='pull-kops-e2e-k8s-aws-calico-1-28',
+            networking='calico',
+            tab_name='e2e-1-28',
+            always_run=True,
+        ),
         presubmit_test(
             distro='channels',
             branch='release-1.27',
@@ -1551,15 +1552,6 @@ def generate_presubmits_e2e():
             always_run=True,
         ),
         presubmit_test(
-            branch='release-1.23',
-            k8s_version='1.23',
-            kops_channel='alpha',
-            name='pull-kops-e2e-k8s-aws-calico-1-23',
-            networking='calico',
-            tab_name='e2e-1-23',
-            always_run=True,
-        ),
-        presubmit_test(
             distro='u2204arm64',
             name="pull-kops-e2e-aws-karpenter",
             run_if_changed=r'^upup\/models\/cloudup\/resources\/addons\/karpenter\.sh\/',
@@ -1569,7 +1561,7 @@ def generate_presubmits_e2e():
                 "--instance-manager=karpenter",
                 "--master-size=c6g.xlarge",
             ],
-            skip_regex=r'\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]|nfs|NFS|Gluster|Services.*rejected.*endpoints|TCP.CLOSE_WAIT|external.IP.is.not.assigned.to.a.node|same.port.number.but.different.protocols|same.hostPort.but.different.hostIP.and.protocol|should.create.a.Pod.with.SCTP.HostPort|Services.should.create.endpoints.for.unready.pods|Services.should.be.able.to.connect.to.terminating.and.unready.endpoints.if.PublishNotReadyAddresses.is.true|should.verify.that.all.nodes.have.volume.limits|In-tree.Volumes|LoadBalancers.should.be.able.to.preserve.UDP.traffic|serve.endpoints.on.same.port.and.different.protocols' # pylint: disable=line-too-long
+            skip_regex=r'\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]|nfs|NFS|Gluster|Services.*rejected.*endpoints|TCP.CLOSE_WAIT|external.IP.is.not.assigned.to.a.node|same.port.number.but.different.protocols|same.hostPort.but.different.hostIP.and.protocol|should.create.a.Pod.with.SCTP.HostPort|Services.should.create.endpoints.for.unready.pods|Services.should.be.able.to.connect.to.terminating.and.unready.endpoints.if.PublishNotReadyAddresses.is.true|should.verify.that.all.nodes.have.volume.limits|In-tree.Volumes|LoadBalancers.should.be.able.to.preserve.UDP.traffic|serve.endpoints.on.same.port.and.different.protocols|fallback.to.local.terminating.endpoints.when.there.are.no.ready.endpoints.with.externalTrafficPolicy.Local' # pylint: disable=line-too-long
         ),
         presubmit_test(
             distro='u2204arm64',
@@ -1584,7 +1576,7 @@ def generate_presubmits_e2e():
                 '--bastion',
                 "--master-size=c6g.xlarge",
             ],
-            skip_regex=r'\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]|nfs|NFS|Gluster|Services.*rejected.*endpoints|TCP.CLOSE_WAIT|external.IP.is.not.assigned.to.a.node|same.port.number.but.different.protocols|same.hostPort.but.different.hostIP.and.protocol|should.create.a.Pod.with.SCTP.HostPort|Services.should.create.endpoints.for.unready.pods|Services.should.be.able.to.connect.to.terminating.and.unready.endpoints.if.PublishNotReadyAddresses.is.true|should.verify.that.all.nodes.have.volume.limits|In-tree.Volumes|LoadBalancers.should.be.able.to.preserve.UDP.traffic|serve.endpoints.on.same.port.and.different.protocols|SSH.should.SSH.to.all.nodes.and.run.commands' # pylint: disable=line-too-long
+            skip_regex=r'\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]|nfs|NFS|Gluster|Services.*rejected.*endpoints|TCP.CLOSE_WAIT|external.IP.is.not.assigned.to.a.node|same.port.number.but.different.protocols|same.hostPort.but.different.hostIP.and.protocol|should.create.a.Pod.with.SCTP.HostPort|Services.should.create.endpoints.for.unready.pods|Services.should.be.able.to.connect.to.terminating.and.unready.endpoints.if.PublishNotReadyAddresses.is.true|should.verify.that.all.nodes.have.volume.limits|In-tree.Volumes|LoadBalancers.should.be.able.to.preserve.UDP.traffic|serve.endpoints.on.same.port.and.different.protocols|SSH.should.SSH.to.all.nodes.and.run.commands|fallback.to.local.terminating.endpoints.when.there.are.no.ready.endpoints.with.externalTrafficPolicy.Local' # pylint: disable=line-too-long
         ),
         presubmit_test(
             name="pull-kops-e2e-aws-upgrade-k124-ko124-to-k125-kolatest",
