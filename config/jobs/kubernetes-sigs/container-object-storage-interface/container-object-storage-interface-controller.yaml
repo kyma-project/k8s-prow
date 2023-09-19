@@ -11,10 +11,12 @@ presubmits:
       description: Build test in container-object-storage-interface-controller repo.
     spec:
       containers:
-      - image: public.ecr.aws/docker/library/golang:1.18.4
+      - image: gcr.io/k8s-staging-test-infra/gcb-docker-gcloud:latest
         command:
-        # Plain make runs also verify
-        - make
+        - /buildx-entrypoint
+        args:
+        - build
+        - .
         resources:
           limits:
             cpu: 2
@@ -34,7 +36,7 @@ presubmits:
       description: Unit tests in container-object-storage-interface-controller repo.
     spec:
       containers:
-      - image: public.ecr.aws/docker/library/golang:1.18.4
+      - image: public.ecr.aws/docker/library/golang:latest
         command:
         - make
         args:

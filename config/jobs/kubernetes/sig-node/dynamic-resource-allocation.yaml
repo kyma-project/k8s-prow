@@ -2,6 +2,7 @@ periodics:
   # This jobs runs e2e.test with a focus on tests for the Dynamic Resource Allocation feature (currently alpha)
   # on a kind cluster with containerd updated to a version with CDI support.
   - name: ci-kind-dra
+    cluster: eks-prow-build-cluster
     interval: 6h
     annotations:
       testgrid-dashboards: sig-node-dynamic-resource-allocation
@@ -37,12 +38,12 @@ periodics:
         securityContext:
           privileged: true
         resources:
+          limits:
+            cpu: 2
+            memory: 9Gi
           requests:
-            # these are both a bit below peak usage during build
-            # this is mostly for building kubernetes
-            memory: "9000Mi"
-            # during the tests more like 3-20m is used
-            cpu: 2000m
+            cpu: 2
+            memory: 9Gi
 
   # This job runs e2e_node.test with a focus on tests for the Dynamic Resource Allocation feature (currently alpha)
   - name: ci-node-e2e-crio-dra
@@ -78,3 +79,32 @@ periodics:
           value: "1"
         - name: GOPATH
           value: /go
+
+  # This job runs the same tests as ci-node-e2e-crio-dra with Containerd 1.7 runtime
+  - name: ci-node-e2e-containerd-1-7-dra
+    interval: 6h
+    annotations:
+      testgrid-dashboards: sig-node-dynamic-resource-allocation
+      testgrid-tab-name: ci-node-e2e-containerd-1-7-dra
+      testgrid-alert-email: eduard.bartosh@intel.com
+    labels:
+      preset-service-account: "true"
+      preset-k8s-ssh: "true"
+    spec:
+      containers:
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20230727-ea685f8747-master
+        args:
+        - --root=/go/src
+        - --repo=k8s.io/kubernetes=master
+        - --timeout=90
+        - --scenario=kubernetes_e2e
+        - -- # end bootstrap args, scenario args below
+        - --deployment=node
+        - --gcp-project-type=node-e2e-project
+        - --gcp-zone=us-west1-b
+        - '--node-test-args=--feature-gates="DynamicResourceAllocation=true" --service-feature-gates="DynamicResourceAllocation=true" --runtime-config=resource.k8s.io/v1alpha2=true --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock --container-runtime-process-name=/usr/local/bin/containerd --container-runtime-pid-file= --kubelet-flags="--cgroup-driver=systemd --cgroups-per-qos=true --cgroup-root=/ --runtime-cgroups=/system.slice/containerd.service --kubelet-cgroups=/system.slice/kubelet.service" --extra-log="{\"name\": \"containerd.log\", \"journalctl\": [\"-u\", \"containerd\"]}"'
+        - --node-tests=true
+        - --provider=gce
+        - --test_args=--focus="\[Feature:DynamicResourceAllocation\]" --skip="\[Flaky\]"
+        - --timeout=65m
+        - --node-args=--image-config-file=/workspace/test-infra/jobs/e2e_node/dra/image-config-containerd-1.7.yaml

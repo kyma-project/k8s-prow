@@ -1,15 +1,15 @@
 presubmits:
   kubernetes-sigs/aws-ebs-csi-driver:
   - name: pull-aws-ebs-csi-driver-test-e2e-external-eks-windows
+    cluster: eks-prow-build-cluster
     always_run: true
-    optional: true
     decorate: true
     skip_branches:
     - gh-pages
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
-      preset-aws-credential-aws-oss-testing: "true"
+      preset-aws-credential-aws-shared-testing: "true"
     spec:
       containers:
       - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20230727-ea685f8747-master
@@ -20,12 +20,20 @@ presubmits:
         - test-e2e-external-eks-windows
         securityContext:
           privileged: true
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+          requests:
+            cpu: "2"
+            memory: "4Gi"
     annotations:
       testgrid-dashboards: provider-aws-ebs-csi-driver
       testgrid-tab-name: test-e2e-external-eks-windows
       description: aws ebs csi driver External Storage tests for Windows on pull request
       testgrid-num-columns-recent: '30'
   - name: pull-aws-ebs-csi-driver-test-helm-chart
+    cluster: eks-prow-build-cluster
     always_run: true
     decorate: true
     skip_branches:
@@ -33,8 +41,9 @@ presubmits:
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
-      preset-aws-credential-aws-oss-testing: "true"
+      preset-aws-credential-aws-shared-testing: "true"
     spec:
+      serviceAccountName: aws-shared-testing-role
       containers:
       - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20230727-ea685f8747-master
         command:
@@ -44,6 +53,13 @@ presubmits:
         - test-helm-chart
         securityContext:
           privileged: true
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+          requests:
+            cpu: "2"
+            memory: "4Gi"
     annotations:
       testgrid-dashboards: provider-aws-ebs-csi-driver
       testgrid-tab-name: test-helm-chart
@@ -67,11 +83,11 @@ presubmits:
         - verify
         resources:
           requests:
-            cpu: 2
-            memory: 4Gi
+            cpu: "2"
+            memory: "4Gi"
           limits:
-            cpu: 2
-            memory: 4Gi
+            cpu: "2"
+            memory: "4Gi"
     annotations:
       testgrid-dashboards: provider-aws-ebs-csi-driver
       testgrid-tab-name: verify
@@ -95,17 +111,18 @@ presubmits:
         - test
         resources:
           requests:
-            cpu: 2
-            memory: 4Gi
+            cpu: "2"
+            memory: "4Gi"
           limits:
-            cpu: 2
-            memory: 4Gi
+            cpu: "2"
+            memory: "4Gi"
     annotations:
       testgrid-dashboards: provider-aws-ebs-csi-driver
       testgrid-tab-name: pull-unit-test
       description: aws ebs csi driver unit test on pull request
       testgrid-num-columns-recent: '30'
   - name: pull-aws-ebs-csi-driver-e2e-single-az
+    cluster: eks-prow-build-cluster
     always_run: true
     decorate: true
     skip_branches:
@@ -113,7 +130,7 @@ presubmits:
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
-      preset-aws-credential-aws-oss-testing: "true"
+      preset-aws-credential-aws-shared-testing: "true"
     spec:
       containers:
       - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20230727-ea685f8747-master
@@ -124,12 +141,20 @@ presubmits:
         - test-e2e-single-az
         securityContext:
           privileged: true
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+          requests:
+            cpu: "2"
+            memory: "4Gi"
     annotations:
       testgrid-dashboards: provider-aws-ebs-csi-driver
       testgrid-tab-name: pull-e2e-test-single-az
       description: aws ebs csi driver e2e test on single az on pull request
       testgrid-num-columns-recent: '30'
   - name: pull-aws-ebs-csi-driver-e2e-multi-az
+    cluster: eks-prow-build-cluster
     always_run: true
     decorate: true
     skip_branches:
@@ -137,7 +162,7 @@ presubmits:
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
-      preset-aws-credential-aws-oss-testing: "true"
+      preset-aws-credential-aws-shared-testing: "true"
     spec:
       containers:
       - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20230727-ea685f8747-master
@@ -148,12 +173,20 @@ presubmits:
         - test-e2e-multi-az
         securityContext:
           privileged: true
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+          requests:
+            cpu: "2"
+            memory: "4Gi"
     annotations:
       testgrid-dashboards: provider-aws-ebs-csi-driver
       testgrid-tab-name: pull-e2e-test-multi-az
       description: aws ebs csi driver e2e test on mutiple AZs on pull request
       testgrid-num-columns-recent: '30'
   - name: pull-aws-ebs-csi-driver-external-test
+    cluster: eks-prow-build-cluster
     always_run: true
     decorate: true
     skip_branches:
@@ -161,7 +194,7 @@ presubmits:
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
-      preset-aws-credential-aws-oss-testing: "true"
+      preset-aws-credential-aws-shared-testing: "true"
     spec:
       containers:
         - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20230727-ea685f8747-master
@@ -172,12 +205,20 @@ presubmits:
             - test-e2e-external
           securityContext:
             privileged: true
+          resources:
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+            requests:
+              cpu: "2"
+              memory: "4Gi"
     annotations:
       testgrid-dashboards: provider-aws-ebs-csi-driver
       testgrid-tab-name: pull-external-test
       description: kubernetes/kubernetes external test on pull request
       testgrid-num-columns-recent: '30'
   - name: pull-aws-ebs-csi-driver-external-test-eks
+    cluster: eks-prow-build-cluster
     always_run: true
     decorate: true
     skip_branches:
@@ -185,7 +226,7 @@ presubmits:
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
-      preset-aws-credential-aws-oss-testing: "true"
+      preset-aws-credential-aws-shared-testing: "true"
     spec:
       containers:
         - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20230727-ea685f8747-master
@@ -196,8 +237,48 @@ presubmits:
             - test-e2e-external-eks
           securityContext:
             privileged: true
+          resources:
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+            requests:
+              cpu: "2"
+              memory: "4Gi"
     annotations:
       testgrid-dashboards: provider-aws-ebs-csi-driver
       testgrid-tab-name: pull-external-test-eks
       description: kubernetes/kubernetes external test on pull request on eks
+      testgrid-num-columns-recent: '30'
+  - name: pull-aws-ebs-csi-driver-external-test-kustomize
+    cluster: eks-prow-build-cluster
+    always_run: true
+    optional: true
+    decorate: true
+    skip_branches:
+      - gh-pages
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-aws-credential-aws-shared-testing: "true"
+    spec:
+      containers:
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20230727-ea685f8747-master
+          command:
+            - runner.sh
+          args:
+            - make
+            - test-e2e-external-kustomize
+          securityContext:
+            privileged: true
+          resources:
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+            requests:
+              cpu: "2"
+              memory: "4Gi"
+    annotations:
+      testgrid-dashboards: provider-aws-ebs-csi-driver
+      testgrid-tab-name: pull-external-test-kustomize
+      description: kubernetes/kubernetes external test on pull request via kustomize
       testgrid-num-columns-recent: '30'

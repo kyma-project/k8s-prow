@@ -62,6 +62,7 @@ def build_test(cloud='aws',
                runs_per_day=0,
                scenario=None,
                env=None,
+               build_cluster="default",
                template_path=None):
     # pylint: disable=too-many-statements,too-many-branches,too-many-arguments
 
@@ -86,10 +87,6 @@ def build_test(cloud='aws',
         kops_image = distro_images[distro]
         kops_ssh_user = distros_ssh_user[distro]
         kops_ssh_key_path = '/etc/aws-ssh/aws-ssh-private'
-
-        if networking == 'cilium-eni':
-            # Needed for higher "IPs per node" limits
-            extra_flags.append('--node-size=t3.large')
 
     elif cloud == 'gce':
         kops_image = None
@@ -180,6 +177,7 @@ def build_test(cloud='aws',
         image=image,
         scenario=scenario,
         env=env,
+        build_cluster=build_cluster,
     )
 
     spec = {
@@ -187,7 +185,7 @@ def build_test(cloud='aws',
         'networking': networking,
         'distro': distro,
         'k8s_version': k8s_version,
-        'kops_version': kops_version,
+        'kops_version': f"{kops_version or 'latest'}",
         'kops_channel': kops_channel,
     }
     if feature_flags:
@@ -199,7 +197,7 @@ def build_test(cloud='aws',
     dashboards = [
         'sig-cluster-lifecycle-kops',
         f"kops-distro-{distro.removesuffix('arm64')}",
-        f"kops-k8s-{k8s_version or 'latest'}",
+        f"kops-k8s-{k8s_version}",
         f"kops-{kops_version or 'latest'}",
     ]
     if cloud == 'aws':
@@ -256,6 +254,7 @@ def presubmit_test(branch='master',
                    env=None,
                    template_path=None,
                    use_boskos=False,
+                   build_cluster="default",
                    use_preset_for_account_creds=None):
     # pylint: disable=too-many-statements,too-many-branches,too-many-arguments
     if cloud == 'aws':
@@ -335,6 +334,7 @@ def presubmit_test(branch='master',
         template_path=template_path,
         boskos_resource_type=boskos_resource_type,
         use_preset_for_account_creds=use_preset_for_account_creds,
+        build_cluster=build_cluster,
     )
 
     spec = {
@@ -421,6 +421,12 @@ def generate_grid():
         for distro in distro_options:
             for k8s_version in k8s_versions:
                 for kops_version in kops_versions:
+                    extra_flags = []
+                    if networking == 'cilium-eni':
+                        extra_flags = ['--node-size=t3.large']
+                    # remove flannel from list of tested CNIs after k8s version < 1.28 is not tested
+                    if networking == 'flannel' and k8s_version in ['1.28', '1.29']:
+                        break
                     results.append(
                         build_test(cloud="aws",
                                    distro=distro,
@@ -428,6 +434,7 @@ def generate_grid():
                                    k8s_version=k8s_version,
                                    kops_version=kops_version,
                                    networking=networking,
+                                   extra_flags=extra_flags,
                                    irsa=False)
                     )
 
@@ -831,6 +838,24 @@ def generate_misc():
                    # Serial and Disruptive tests can be slow.
                    test_timeout_minutes=120,
                    runs_per_day=3),
+        # test kops with GCE COS
+        build_test(name_override="kops-grid-gce-cos-105-ci",
+                   cloud="gce",
+                   distro="cos105",
+                   networking="kubenet",
+                   k8s_version="ci",
+                   kops_version="https://storage.googleapis.com/kops-ci/bin/latest-ci.txt",
+                   kops_channel="alpha",
+                   build_cluster="k8s-infra-prow-build",
+                   extra_flags=[
+                       "--image=cos-cloud/cos-105-17412-156-49",
+                       "--set=spec.kubeDNS.provider=KubeDNS",
+                       "--gce-service-account=default", # Workaround for test-infra#24747
+                   ],
+                   skip_regex=r'\[Driver:.nfs\]|\[Serial\]|\[Slow\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]', # pylint: disable=line-too-long
+                   test_timeout_minutes=60,
+                   runs_per_day=8),
+
     ]
     return results
 
@@ -1092,6 +1117,7 @@ def generate_presubmits_scale():
         presubmit_test(
             name='presubmit-kops-aws-scale-amazonvpc',
             scenario='scalability',
+            build_cluster="eks-prow-build-cluster",
             # only helps with setting the right anotation test.kops.k8s.io/networking
             networking='amazonvpc',
             always_run=False,
@@ -1102,6 +1128,7 @@ def generate_presubmits_scale():
         presubmit_test(
             name='presubmit-kops-aws-scale-amazonvpc-using-cl2',
             scenario='scalability',
+            build_cluster="eks-prow-build-cluster",
             # only helps with setting the right anotation test.kops.k8s.io/networking
             networking='amazonvpc',
             always_run=False,
@@ -1110,7 +1137,7 @@ def generate_presubmits_scale():
             use_preset_for_account_creds='preset-aws-credential-boskos-scale-001-kops',
             env={
                 'CNI_PLUGIN': "amazonvpc",
-                'KUBE_NODE_COUNT': "2000",
+                'KUBE_NODE_COUNT': "4200",
                 'RUN_CL2_TEST': "true",
                 'CL2_LOAD_TEST_THROUGHPUT': "50",
                 'CL2_DELETE_TEST_THROUGHPUT': "50",
@@ -1123,6 +1150,7 @@ def generate_presubmits_scale():
         presubmit_test(
             name='presubmit-kops-aws-small-scale-amazonvpc-using-cl2',
             scenario='scalability',
+            build_cluster="eks-prow-build-cluster",
             # only helps with setting the right anotation test.kops.k8s.io/networking
             networking='amazonvpc',
             always_run=False,
