@@ -237,6 +237,13 @@ builds:
   - -s -w
   - -X k8s.io/test-infra/prow/version.Version={{.Env.VERSION}}
   - -X k8s.io/test-infra/prow/version.Name=jenkins-operator
+- id: moonraker
+  dir: .
+  main: prow/cmd/moonraker
+  ldflags:
+  - -s -w
+  - -X k8s.io/test-infra/prow/version.Version={{.Env.VERSION}}
+  - -X k8s.io/test-infra/prow/version.Name=moonraker
 - id: peribolos
   dir: .
   main: prow/cmd/peribolos

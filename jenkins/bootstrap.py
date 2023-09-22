@@ -43,10 +43,10 @@ import contextlib
 import json
 import logging
 import os
-import pipes
 import random
 import re
 import select
+import shlex
 import signal
 import socket
 import subprocess
@@ -99,7 +99,7 @@ def terminate(end, proc, kill):
 
 def _call(end, cmd, stdin=None, check=True, output=None, log_failures=True, env=None):  # pylint: disable=too-many-locals
     """Start a subprocess."""
-    logging.info('Call:  %s', ' '.join(pipes.quote(c) for c in cmd))
+    logging.info('Call:  %s', ' '.join(shlex.quote(c) for c in cmd))
     begin = time.time()
     if end:
         end = max(end, time.time() + 60)  # Allow at least 60s per command
@@ -1066,7 +1066,7 @@ def bootstrap(args):
     )
 
     if len(sys.argv) > 1:
-        logging.info('Args: %s', ' '.join(pipes.quote(a)
+        logging.info('Args: %s', ' '.join(shlex.quote(a)
                                           for a in sys.argv[1:]))
     logging.info('Bootstrap %s...', job)
     logging.info('Builder: %s', node())
