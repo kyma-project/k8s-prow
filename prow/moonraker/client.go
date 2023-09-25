@@ -24,6 +24,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"sync"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -46,15 +47,17 @@ type prowConfigAgentClient interface {
 
 type Client struct {
 	host        string
-	httpClient  *http.Client
 	configAgent prowConfigAgentClient
+
+	sync.Mutex // protects below
+	httpClient *http.Client
 }
 
-func NewClient(host string, timeout time.Duration, configAgent prowConfigAgentClient) (*Client, error) {
+func NewClient(host string, configAgent prowConfigAgentClient) (*Client, error) {
 	c := Client{
 		host: host,
 		httpClient: &http.Client{
-			Timeout: timeout,
+			Timeout: configAgent.Config().Moonraker.ClientTimeout.Duration,
 		},
 		configAgent: configAgent,
 	}
@@ -95,7 +98,22 @@ func (c *Client) do(method, path string, payload []byte, params map[string]strin
 		q.Set(key, val)
 	}
 	req.URL.RawQuery = q.Encode()
-	return c.httpClient.Do(req)
+	return c.maybeUpdatedHttpClient().Do(req)
+}
+
+// maybeUpdatedHttpClient returns a new HTTP client with a new one (with
+// a new timeout) if the provided timeout does not match the value already used
+// for the current HTTP client.
+func (c *Client) maybeUpdatedHttpClient() *http.Client {
+	c.Lock()
+	defer c.Unlock()
+	timeout := c.configAgent.Config().Moonraker.ClientTimeout.Duration
+
+	if c.httpClient.Timeout != timeout {
+		c.httpClient = &http.Client{Timeout: timeout}
+	}
+
+	return c.httpClient
 }
 
 func (c *Client) Ping() error {
@@ -148,6 +166,11 @@ func (c *Client) GetProwYAML(refs *prowapi.Refs) (*config.ProwYAML, error) {
 
 // GetInRepoConfig just wraps around GetProwYAML(), converting the input
 // parameters into a prowapi.Refs{} type.
+//
+// Importantly, it also does defaulting of the retrieved jobs. Defaulting is
+// required because the Presubmit and Postsubmit job types have private fields
+// in them that would not be serialized into JSON when sent over from the
+// server. So the defaulting has to be done client-side.
 func (c *Client) GetInRepoConfig(identifier string, baseSHAGetter config.RefGetter, headSHAGetters ...config.RefGetter) (*config.ProwYAML, error) {
 	refs := prowapi.Refs{}
 
@@ -173,7 +196,17 @@ func (c *Client) GetInRepoConfig(identifier string, baseSHAGetter config.RefGett
 	}
 	refs.Pulls = pulls
 
-	return c.GetProwYAML(&refs)
+	prowYAML, err := c.GetProwYAML(&refs)
+	if err != nil {
+		return nil, err
+	}
+
+	cfg := c.configAgent.Config()
+	if err := config.DefaultAndValidateProwYAML(cfg, prowYAML, identifier); err != nil {
+		return nil, err
+	}
+
+	return prowYAML, nil
 }
 
 func (c *Client) GetPresubmits(identifier string, baseSHAGetter config.RefGetter, headSHAGetters ...config.RefGetter) ([]config.Presubmit, error) {
