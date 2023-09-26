@@ -791,6 +791,13 @@ func hasArg(wanted string, args []string) bool {
 	return false
 }
 
+func checkBootstrapImage(jobName, imageName string) error {
+	if strings.Contains(imageName, "bootstrap") {
+		return fmt.Errorf("job %s: image %s has been decommissioned", jobName, imageName)
+	}
+	return nil
+}
+
 func checkScenarioArgs(jobName, imageName string, args []string) error {
 	// env files/scenarios validation
 	scenarioArgs := false
@@ -809,24 +816,12 @@ func checkScenarioArgs(jobName, imageName string, args []string) error {
 		}
 	}
 
-	if scenario == "" {
-		if !scenarioArgs {
-			if strings.Contains(imageName, "kubekins-e2e") ||
-				strings.Contains(imageName, "bootstrap") ||
-				strings.Contains(imageName, "gcloud-in-go") {
-				return fmt.Errorf("job %s: image %s uses bootstrap.py and need scenario args", jobName, imageName)
-			}
-			return nil
-		}
-
-	} else {
-		if _, err := os.Stat(fmt.Sprintf("../../../scenarios/%s.py", scenario)); err != nil {
-			return fmt.Errorf("job %s: scenario %s does not exist: %s", jobName, scenario, err)
-		}
-
-		if !scenarioArgs {
-			return fmt.Errorf("job %s: set --scenario=%s and will need scenario args", jobName, scenario)
-		}
+	if scenario != "" {
+		return fmt.Errorf("job %s: scenario (%s) based bootstrap.py jobs are not supported",
+			jobName, scenario)
+	}
+	if scenarioArgs {
+		return fmt.Errorf("job %s: scenario based bootstrap.py jobs are not supported", jobName)
 	}
 
 	// shared build args
@@ -956,6 +951,14 @@ func checkScenarioArgs(jobName, imageName string, args []string) error {
 	return nil
 }
 
+func TestPreSubmitPathAlias(t *testing.T) {
+	for _, job := range c.AllStaticPresubmits([]string{"kubernetes/kubernetes"}) {
+		if job.PathAlias != "k8s.io/kubernetes" {
+			t.Errorf("Invalid PathAlias (%s) in job %s for kubernetes/kubernetes repository", job.Name, job.PathAlias)
+		}
+	}
+}
+
 // TestValidScenarioArgs makes sure all scenario args in job configs are valid
 func TestValidScenarioArgs(t *testing.T) {
 	for _, job := range c.AllStaticPresubmits(nil) {
@@ -963,6 +966,9 @@ func TestValidScenarioArgs(t *testing.T) {
 			if err := checkScenarioArgs(job.Name, job.Spec.Containers[0].Image, job.Spec.Containers[0].Args); err != nil {
 				t.Errorf("Invalid Scenario Args : %s", err)
 			}
+		}
+		if err := checkBootstrapImage(job.Name, job.Spec.Containers[0].Image); err != nil {
+			t.Errorf("Invalid image : %s", err)
 		}
 	}
 
@@ -972,6 +978,9 @@ func TestValidScenarioArgs(t *testing.T) {
 				t.Errorf("Invalid Scenario Args : %s", err)
 			}
 		}
+		if err := checkBootstrapImage(job.Name, job.Spec.Containers[0].Image); err != nil {
+			t.Errorf("Invalid image : %s", err)
+		}
 	}
 
 	for _, job := range c.AllPeriodics() {
@@ -979,6 +988,9 @@ func TestValidScenarioArgs(t *testing.T) {
 			if err := checkScenarioArgs(job.Name, job.Spec.Containers[0].Image, job.Spec.Containers[0].Args); err != nil {
 				t.Errorf("Invalid Scenario Args : %s", err)
 			}
+		}
+		if err := checkBootstrapImage(job.Name, job.Spec.Containers[0].Image); err != nil {
+			t.Errorf("Invalid image : %s", err)
 		}
 	}
 }

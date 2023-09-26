@@ -6,11 +6,12 @@ presubmits:
     run_if_changed: '(^.go-version)|(^build/build-image/)|(^hack/lib/golang.sh)|(^build/common.sh)'
     cluster: eks-prow-build-cluster
     decorate: true
+    path_alias: k8s.io/kubernetes
     labels:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/bootstrap:v20230316-ac3134cff2
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20230727-ea685f8747-master
         command:
         - runner.sh
         args:

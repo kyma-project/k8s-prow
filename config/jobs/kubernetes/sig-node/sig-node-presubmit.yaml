@@ -657,11 +657,11 @@ presubmits:
             value: /go
           resources:
             limits:
-              cpu: 4
-              memory: 6Gi
+              cpu: 8
+              memory: 10Gi
             requests:
-              cpu: 4
-              memory: 6Gi
+              cpu: 8
+              memory: 10Gi
   - name: pull-kubernetes-node-kubelet-serial-containerd-kubetest2
     # explicitly needs /test pull-kubernetes-node-kubelet-serial-containerd-kubetest2 to run
     always_run: false
@@ -1134,6 +1134,7 @@ presubmits:
         - '--test-args=--container-runtime-endpoint=unix:///var/run/crio/crio.sock --container-runtime-process-name=/usr/local/bin/crio --container-runtime-pid-file= --kubelet-flags="--cgroup-driver=systemd --cgroups-per-qos=true --cgroup-root=/ --runtime-cgroups=/system.slice/crio.service --kubelet-cgroups=/system.slice/kubelet.service" --extra-log="{\"name\": \"crio.log\", \"journalctl\": [\"-u\", \"crio\"]}"'
         - --image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv2-k8s-infra-prow-build-kubetest2.yaml
   - name: pull-crio-cgroupv1-node-e2e-features
+    cluster: k8s-infra-prow-build
     always_run: false
     optional: true
     skip_branches:
@@ -1161,7 +1162,6 @@ presubmits:
         args:
         - --deployment=node
         - --env=KUBE_SSH_USER=core
-        - --gcp-project-type=node-e2e-project
         - --gcp-zone=us-west1-b
         - '--node-test-args=--container-runtime-endpoint=unix:///var/run/crio/crio.sock --container-runtime-process-name=/usr/local/bin/crio --container-runtime-pid-file= --kubelet-flags="--cgroup-driver=systemd --cgroups-per-qos=true --cgroup-root=/ --runtime-cgroups=/system.slice/crio.service --kubelet-cgroups=/system.slice/kubelet.service" --extra-log="{\"name\": \"crio.log\", \"journalctl\": [\"-u\", \"crio\"]}"'
         - --node-tests=true
@@ -1425,7 +1425,6 @@ presubmits:
         args:
           - --deployment=node
           - --env=KUBE_SSH_USER=core
-          - --gcp-project-type=node-e2e-project
           - --gcp-zone=us-west1-b
           - '--node-test-args=--container-runtime-endpoint=unix:///var/run/crio/crio.sock --container-runtime-process-name=/usr/local/bin/crio --container-runtime-pid-file= --kubelet-flags="--cgroup-driver=systemd --cgroups-per-qos=true --cgroup-root=/ --runtime-cgroups=/system.slice/crio.service --kubelet-cgroups=/system.slice/kubelet.service" --extra-log="{\"name\": \"crio.log\", \"journalctl\": [\"-u\", \"crio\"]}"'
           - --node-tests=true
@@ -1480,7 +1479,6 @@ presubmits:
           args:
             - --deployment=node
             - --env=KUBE_SSH_USER=core
-            - --gcp-project-type=node-e2e-project
             - --gcp-zone=us-west1-b
             - '--node-test-args=--container-runtime-endpoint=unix:///var/run/crio/crio.sock --container-runtime-process-name=/usr/local/bin/crio --container-runtime-pid-file= --kubelet-flags="--cgroup-driver=systemd --cgroups-per-qos=true --cgroup-root=/ --runtime-cgroups=/system.slice/crio.service --kubelet-cgroups=/system.slice/kubelet.service" --extra-log="{\"name\": \"crio.log\", \"journalctl\": [\"-u\", \"crio\"]}"'
             - --node-tests=true
@@ -1813,6 +1811,7 @@ presubmits:
       testgrid-dashboards: sig-node-presubmits
       testgrid-tab-name: pr-crio-dra
     decorate: true
+    path_alias: k8s.io/kubernetes
     # Not relevant for most PRs.
     always_run: false
     # This covers most of the code related to dynamic resource allocation.
@@ -2140,7 +2139,6 @@ presubmits:
         args:
         - --deployment=node
         - --env=KUBE_SSH_USER=core
-        - --gcp-project-type=node-e2e-project
         - --gcp-zone=us-west1-b
         - '--node-test-args=--container-runtime-endpoint=unix:///var/run/crio/crio.sock --container-runtime-process-name=/usr/local/bin/crio --container-runtime-pid-file= --kubelet-flags="--cgroup-driver=systemd --cgroups-per-qos=true --cgroup-root=/ --runtime-cgroups=/system.slice/crio.service --kubelet-cgroups=/system.slice/kubelet.service" --extra-log="{\"name\": \"crio.log\", \"journalctl\": [\"-u\", \"crio\"]}"'
         - --node-tests=true
