@@ -33,7 +33,7 @@ from helpers import ( # pylint: disable=import-error, no-name-in-module
 skip_jobs = [
 ]
 
-image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20230727-ea685f8747-master"
+image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231010-50b212c4fa-master"
 
 loader = jinja2.FileSystemLoader(searchpath="./templates")
 
@@ -878,13 +878,30 @@ def generate_misc():
                    kops_version="https://storage.googleapis.com/kops-ci/bin/latest-ci.txt",
                    kops_channel="alpha",
                    extra_flags=[
-                       "--image=137112412989/al2023-ami-2023.2.20230920.1-kernel-6.1-x86_64" # pylint: disable=line-too-long
+                       "--image=137112412989/al2023-ami-2023.2.20230920.1-kernel-6.1-x86_64", # pylint: disable=line-too-long
                        "--set=spec.nodeProblemDetector.enabled=true",
                        "--set=spec.packages=nfs-utils",
                    ],
                    skip_regex=r'\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]', # pylint: disable=line-too-long
                    test_timeout_minutes=60,
                    test_args="--num-nodes=3 --master-os-distro=gci --node-os-distro=gci",
+                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops"],
+                   runs_per_day=8),
+
+        build_test(name_override="ci-kubernetes-e2e-ubuntu-aws-canary",
+                   cloud="aws",
+                   distro="u2204",
+                   networking="kubenet",
+                   k8s_version="ci",
+                   kops_version="https://storage.googleapis.com/kops-ci/bin/latest-ci.txt",
+                   kops_channel="alpha",
+                   extra_flags=[
+                       "--set=spec.nodeProblemDetector.enabled=true",
+                       "--set=spec.packages=nfs-common",
+                   ],
+                   skip_regex=r'\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]', # pylint: disable=line-too-long
+                   test_timeout_minutes=60,
+                   test_args="--master-os-distro=ubuntu --node-os-distro=ubuntu",
                    extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops"],
                    runs_per_day=8),
 
@@ -916,7 +933,8 @@ def generate_misc():
                    kops_channel="alpha",
                    build_cluster="k8s-infra-prow-build",
                    extra_flags=[
-                       "--image=137112412989/al2023-ami-2023.2.20230920.1-kernel-6.1-x86_64"
+                       "--image=137112412989/al2023-ami-2023.2.20230920.1-kernel-6.1-x86_64",
+                       "--set=spec.packages=nfs-utils",
                    ],
                    focus_regex=r'\[Slow\]',
                    skip_regex=r'\[Driver:.gcepd\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]', # pylint: disable=line-too-long
@@ -1981,7 +1999,7 @@ def generate_presubmits_e2e():
             focus_regex=r'\[Serial\]',
             skip_regex=r'\[Driver:.gcepd\]|\[Flaky\]|\[Feature:.+\]', # pylint: disable=line-too-long
             test_timeout_minutes=500,
-            always_run=False,
+            optional=True,
             test_parallelism=1, # serial tests
             test_args="--master-os-distro=gci --node-os-distro=gci",
         ),
@@ -2000,7 +2018,7 @@ def generate_presubmits_e2e():
             ],
             skip_regex=r'\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]', # pylint: disable=line-too-long
             test_timeout_minutes=40,
-            always_run=False,
+            optional=True,
             test_args="--master-os-distro=gci --node-os-distro=gci",
         ),
 
@@ -2019,7 +2037,7 @@ def generate_presubmits_e2e():
             focus_regex=r'\[Slow\]',
             skip_regex=r'\[Driver:.gcepd\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]', # pylint: disable=line-too-long
             test_timeout_minutes=70,
-            always_run=False,
+            optional=True,
             test_args="--master-os-distro=gci --node-os-distro=gci",
         ),
     ]
