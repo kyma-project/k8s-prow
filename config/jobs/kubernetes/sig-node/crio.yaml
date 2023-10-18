@@ -33,7 +33,7 @@ periodics:
       - --provider=gce
       - --test_args=--nodes=8 --focus="\[NodeConformance\]" --skip="\[Flaky\]|\[Slow\]|\[Serial\]"
       - --timeout=180m
-      - --node-args=--image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv1-k8s-infra-prow-build.yaml
+      - --node-args=--image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv1.yaml
       env:
       - name: GOPATH
         value: /go
@@ -121,7 +121,7 @@ periodics:
       - --provider=gce
       - --test_args=--nodes=8 --focus="\[NodeFeature:.+\]|\[NodeFeature\]" --skip="\[Flaky\]|\[Slow\]|\[Serial\]"
       - --timeout=180m
-      - --node-args=--image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv1-k8s-infra-prow-build.yaml
+      - --node-args=--image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv1.yaml
       env:
       - name: GOPATH
         value: /go
@@ -173,7 +173,7 @@ periodics:
       - --provider=gce
       - --test_args=--nodes=1 --focus="\[Flaky\]"
       - --timeout=60m
-      - --node-args=--image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv1-k8s-infra-prow-build.yaml
+      - --node-args=--image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv1.yaml
       env:
       - name: GOPATH
         value: /go
@@ -225,7 +225,7 @@ periodics:
       - --provider=gce
       - --test_args=--nodes=1 --skip="\[Flaky\]|\[NodeConformance\]|\[Conformance\]|\[Serial\]|\[NodeFeature:.+\]|\[NodeFeature\]|\[Feature:.+\]|\[Feature\]|\[NodeSpecialFeature:.+\]|\[NodeSpecialFeature\]|\[NodeAlphaFeature:.+\]|\[NodeAlphaFeature\]|\[Legacy:.+\]|\[Benchmark\]|\[Feature:SCTPConnectivity\]"
       - --timeout=300m
-      - --node-args=--image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv1-k8s-infra-prow-build.yaml
+      - --node-args=--image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv1.yaml
       env:
       - name: GOPATH
         value: /go
@@ -275,9 +275,9 @@ periodics:
       - '--node-test-args=--container-runtime-endpoint=unix:///var/run/crio/crio.sock --container-runtime-process-name=/usr/local/bin/crio --container-runtime-pid-file= --kubelet-flags="--cgroup-driver=systemd --cgroups-per-qos=true --cgroup-root=/ --runtime-cgroups=/system.slice/crio.service --kubelet-cgroups=/system.slice/kubelet.service" --extra-log="{\"name\": \"crio.log\", \"journalctl\": [\"-u\", \"crio\"]}"'
       - --node-tests=true
       - --provider=gce
-      - --test_args=--nodes=1 --focus="\[NodeFeature:Eviction\]"
+      - --test_args=--nodes=1 --focus="\[NodeFeature:Eviction\]" --timeout=300m
       - --timeout=300m
-      - --node-args=--image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv1-k8s-infra-prow-build.yaml
+      - --node-args=--image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv1.yaml
       env:
       - name: GOPATH
         value: /go
@@ -329,7 +329,7 @@ periodics:
       - --provider=gce
       - --test_args=--nodes=8 --focus="\[NodeConformance\]" --skip="\[Flaky\]|\[Slow\]|\[Serial\]"
       - --timeout=180m
-      - --node-args=--image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv2-k8s-infra-prow-build.yaml
+      - --node-args=--image-config-file=/home/prow/go/src/k8s.io/test-infra/jobs/e2e_node/crio/latest/image-config-cgrpv2.yaml
       env:
       - name: GOPATH
         value: /go
