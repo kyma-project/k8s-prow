@@ -33,7 +33,7 @@ from helpers import ( # pylint: disable=import-error, no-name-in-module
 skip_jobs = [
 ]
 
-image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231015-d38ebb23ab-master"
+image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231020-23776ee4a3-master"
 
 loader = jinja2.FileSystemLoader(searchpath="./templates")
 
@@ -1559,6 +1559,7 @@ def generate_presubmits_network_plugins():
             )
         )
         if plugin in supports_ipv6:
+            optional = True
             if plugin == 'amazonvpc':
                 run_if_changed = None
             results.append(
