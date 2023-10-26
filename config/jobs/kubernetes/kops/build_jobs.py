@@ -33,7 +33,7 @@ from helpers import ( # pylint: disable=import-error, no-name-in-module
 skip_jobs = [
 ]
 
-image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231020-23776ee4a3-master"
+image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231025-98aa77f51a-master"
 
 loader = jinja2.FileSystemLoader(searchpath="./templates")
 
@@ -1533,6 +1533,7 @@ def generate_presubmits_network_plugins():
         focus_regex = None
         if plugin == 'cilium-eni':
             focus_regex = r'\[Conformance\]|\[NodeConformance\]'
+            optional = True
         if plugin == 'amazonvpc':
             distro = 'u2004'
             optional = True
