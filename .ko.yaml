@@ -20,6 +20,7 @@ baseImageOverrides:
   k8s.io/test-infra/prow/cmd/initupload: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine-git:v20230913-3d41bb28
   k8s.io/test-infra/prow/cmd/invitations-accepter: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine:v20230913-3d41bb28
   k8s.io/test-infra/prow/cmd/jenkins-operator: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine-git:v20230913-3d41bb28
+  k8s.io/test-infra/prow/cmd/moonraker: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine-git:v20230913-3d41bb28
   k8s.io/test-infra/prow/cmd/peribolos: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine:v20230913-3d41bb28
   k8s.io/test-infra/prow/cmd/sidecar: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine-git:v20230913-3d41bb28
   k8s.io/test-infra/prow/cmd/sinker: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine-git-gke-aws-auth:v20230913-3d41bb28
@@ -29,6 +30,7 @@ baseImageOverrides:
   k8s.io/test-infra/prow/cmd/tot: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine:v20230913-3d41bb28
   k8s.io/test-infra/prow/cmd/prow-controller-manager: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine-git-gke-aws-auth:v20230913-3d41bb28
   k8s.io/test-infra/prow/cmd/admission: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine:v20230913-3d41bb28
+  k8s.io/test-infra/prow/cmd/webhook-server: gcr.io/distroless/static:nonroot@sha256:9ecc53c269509f63c69a266168e4a687c7eb8c0cfd753bd8bfcaa4f58a90876f
   k8s.io/test-infra/prow/cmd/mkpj: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine:v20230913-3d41bb28
   k8s.io/test-infra/prow/cmd/mkpod: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine:v20230913-3d41bb28
   k8s.io/test-infra/prow/cmd/pipeline: europe-docker.pkg.dev/kyma-project/prod/testimages/alpine:v20230913-3d41bb28
