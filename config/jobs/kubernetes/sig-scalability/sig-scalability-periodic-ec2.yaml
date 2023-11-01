@@ -28,6 +28,10 @@ periodics:
     description: Deletes old AWS resources for scalability jobs
 
 - name: ci-kubernetes-e2e-kops-aws-scale-amazonvpc-using-cl2
+  tags:
+  - "perfDashPrefix: aws-5000Nodes"
+  - "perfDashBuildsCount: 270"
+  - "perfDashJobType: performance"
   cluster: eks-prow-build-cluster
   interval: 12h
   labels:
@@ -58,11 +62,11 @@ periodics:
     test.kops.k8s.io/k8s_version: stable
     test.kops.k8s.io/kops_channel: alpha
     test.kops.k8s.io/networking: amazonvpc
-    testgrid-dashboards: kops-misc, sig-cluster-lifecycle-kops
+    testgrid-dashboards: kops-misc, sig-cluster-lifecycle-kops, sig-scalability-aws
     testgrid-tab-name: ec2-master-scale-performance
   spec:
     containers:
-    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231026-34e553baa8-master
+    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
       imagePullPolicy: Always
       command:
       - runner.sh

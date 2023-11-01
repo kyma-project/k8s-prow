@@ -321,13 +321,13 @@ function copy-logs-from-node() {
       set +e
 
       # TODO(argh4k): remove it once https://github.com/kubernetes/kubernetes/issues/121320 is solved
+      source_file_args=()
       for single_file in "${files[@]}"; do
-        gcloud compute scp --dry-run --recurse --project "${PROJECT}" --zone "${ZONE}" "${node}:${single_file}" "${dir}" --verbosity debug 
-      done 
-
-      for single_file in "${files[@]}"; do
-        strace --trace-path "${dir}/${single_file}" gcloud compute scp --recurse --project "${PROJECT}" --zone "${ZONE}" "${node}:${single_file}" "${dir}" --verbosity debug --scp-flag="-v"
+        source_file_args+=( "${node}:${single_file}" )
       done
+      gcloud compute scp --dry-run --recurse --project "${PROJECT}" --zone "${ZONE}" "${source_file_args[@]}" "${dir}" --verbosity debug
+
+      gcloud compute scp --recurse --project "${PROJECT}" --zone "${ZONE}" "${source_file_args[@]}" "${dir}" --verbosity debug --scp-flag="-v"
       set -e
     elif  [[ "${KUBERNETES_PROVIDER}" == "aws" ]]; then
       local ip
