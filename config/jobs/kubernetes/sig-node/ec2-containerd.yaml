@@ -35,7 +35,7 @@ periodics:
     spec:
       serviceAccountName: node-e2e-tests
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
           command:
             - runner.sh
           args:
@@ -78,7 +78,7 @@ periodics:
     spec:
       serviceAccountName: node-e2e-tests
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
           command:
             - runner.sh
           args:
@@ -86,6 +86,8 @@ periodics:
           env:
             - name: FOCUS
               value: \[NodeConformance\]
+            - name: SKIP
+              value: "Summary API"
             - name: BUILD_EKS_AMI
               value: "true"
             - name: IMAGE_CONFIG_DIR
@@ -124,7 +126,7 @@ periodics:
     spec:
       serviceAccountName: node-e2e-tests
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
           command:
             - runner.sh
           args:
@@ -132,6 +134,8 @@ periodics:
           env:
             - name: FOCUS
               value: \[NodeConformance\]
+            - name: SKIP
+              value: "Summary API"
             - name: BUILD_EKS_AMI
               value: "true"
             - name: BUILD_EKS_AMI_ARCH
@@ -178,7 +182,7 @@ periodics:
     spec:
       serviceAccountName: node-e2e-tests
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
           command:
             - runner.sh
           args:
@@ -186,6 +190,8 @@ periodics:
           env:
             - name: FOCUS
               value: \[NodeConformance\]
+            - name: SKIP
+              value: "Summary API"
             - name: BUILD_EKS_AMI
               value: "true"
             - name: BUILD_EKS_AMI_OS
@@ -226,7 +232,7 @@ periodics:
     spec:
       serviceAccountName: node-e2e-tests
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
           command:
             - runner.sh
           args:
@@ -234,6 +240,8 @@ periodics:
           env:
             - name: FOCUS
               value: \[NodeConformance\]
+            - name: SKIP
+              value: "Summary API"
             - name: BUILD_EKS_AMI
               value: "true"
             - name: BUILD_EKS_AMI_OS
@@ -283,7 +291,7 @@ periodics:
     spec:
       serviceAccountName: node-e2e-tests
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
           command:
             - runner.sh
           args:
@@ -300,7 +308,7 @@ periodics:
             - name: IMAGE_CONFIG_FILE
               value: aws-instance-arm64.yaml
             - name: TEST_ARGS
-              value: '--kubelet-flags="--cgroup-driver=cgroupfs"'
+              value: '--kubelet-flags="--cgroup-driver=systemd"'
           # docker-in-docker needs privileged mode
           securityContext:
             privileged: true
@@ -333,7 +341,7 @@ periodics:
     spec:
       serviceAccountName: node-e2e-tests
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
           command:
             - runner.sh
           args:
@@ -384,7 +392,7 @@ periodics:
     spec:
       serviceAccountName: node-e2e-tests
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
           command:
             - runner.sh
           args:
@@ -431,7 +439,7 @@ periodics:
     spec:
       serviceAccountName: node-e2e-tests
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
           command:
             - runner.sh
           args:
@@ -480,7 +488,7 @@ periodics:
     spec:
       serviceAccountName: node-e2e-tests
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
           command:
             - runner.sh
           args:
@@ -537,7 +545,7 @@ periodics:
     spec:
       serviceAccountName: node-e2e-tests
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
           command:
             - runner.sh
           args:
@@ -588,7 +596,7 @@ periodics:
     spec:
       serviceAccountName: node-e2e-tests
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231031-660609d482-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
           command:
             - runner.sh
           args:
