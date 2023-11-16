@@ -28,7 +28,7 @@ presubmits:
       path_alias: k8s.io/perf-tests
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231114-c7aaf965de-master
         imagePullPolicy: Always
         command:
         - runner.sh
@@ -95,7 +95,7 @@ presubmits:
       path_alias: k8s.io/perf-tests
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231114-c7aaf965de-master
         imagePullPolicy: Always
         command:
         - runner.sh
@@ -144,6 +144,16 @@ presubmits:
           value: "true"
         - name: PROMETHEUS_PVC_STORAGE_CLASS
           value: "gp2"
+        - name: CL2_NETWORK_LATENCY_THRESHOLD
+          value: "0.5s"
+        - name: CL2_ENABLE_VIOLATIONS_FOR_NETWORK_PROGRAMMING_LATENCIES
+          value: "true"
+        - name: CL2_NETWORK_PROGRAMMING_LATENCY_THRESHOLD
+          value: "20s"
+        - name: CL2_ENABLE_DNSTESTS
+          value: "true"
+        - name: CL2_USE_ADVANCED_DNSTEST
+          value: "true"
         - name: CLOUD_PROVIDER
           value: "aws"
         - name: CLUSTER_NAME
@@ -192,7 +202,7 @@ presubmits:
       path_alias: k8s.io/perf-tests
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231103-fd8df63b1a-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231114-c7aaf965de-master
         imagePullPolicy: Always
         command:
         - runner.sh
