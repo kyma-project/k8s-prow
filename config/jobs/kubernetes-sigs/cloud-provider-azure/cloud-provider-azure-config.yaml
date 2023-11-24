@@ -868,7 +868,7 @@ periodics:
   extra_refs:
     - org: kubernetes-sigs
       repo: cluster-api-provider-azure
-      base_ref: release-1.11
+      base_ref: release-1.12
       path_alias: sigs.k8s.io/cluster-api-provider-azure
       workdir: true
     - org: kubernetes-sigs
@@ -972,7 +972,7 @@ periodics:
   extra_refs:
     - org: kubernetes-sigs
       repo: cluster-api-provider-azure
-      base_ref: release-1.11
+      base_ref: release-1.12
       path_alias: sigs.k8s.io/cluster-api-provider-azure
       workdir: true
     - org: kubernetes-sigs
@@ -1029,7 +1029,7 @@ periodics:
   extra_refs:
   - org: kubernetes-sigs
     repo: cluster-api-provider-azure
-    base_ref: release-1.11
+    base_ref: release-1.12
     path_alias: sigs.k8s.io/cluster-api-provider-azure
     workdir: true
   - org: kubernetes
@@ -1091,7 +1091,7 @@ periodics:
   extra_refs:
   - org: kubernetes-sigs
     repo: cluster-api-provider-azure
-    base_ref: release-1.11
+    base_ref: release-1.12
     path_alias: sigs.k8s.io/cluster-api-provider-azure
     workdir: true
   - org: kubernetes
@@ -1160,7 +1160,7 @@ periodics:
   extra_refs:
   - org: kubernetes-sigs
     repo: cluster-api-provider-azure
-    base_ref: release-1.11
+    base_ref: release-1.12
     path_alias: sigs.k8s.io/cluster-api-provider-azure
     workdir: true
   - org: kubernetes
@@ -1223,7 +1223,7 @@ periodics:
   extra_refs:
     - org: kubernetes-sigs
       repo: cluster-api-provider-azure
-      base_ref: release-1.11
+      base_ref: release-1.12
       path_alias: sigs.k8s.io/cluster-api-provider-azure
       workdir: true
     - org: kubernetes-sigs
@@ -1253,7 +1253,7 @@ periodics:
         - name: KUBERNETES_VERSION # CAPZ config
           value: "latest"
         - name: CLUSTER_TEMPLATE # CAPZ config
-          value: https://raw.githubusercontent.com/kubernetes-sigs/cluster-api-provider-azure/release-1.11/templates/test/ci/cluster-template-prow-machine-pool-ci-version.yaml
+          value: https://raw.githubusercontent.com/kubernetes-sigs/cluster-api-provider-azure/release-1.12/templates/test/ci/cluster-template-prow-machine-pool-ci-version.yaml
         - name: AZURE_LOADBALANCER_SKU # cloud-provider-azure config
           value: "Standard"
         - name: CLUSTER_PROVISIONING_TOOL # cloud-provider-azure config
@@ -1339,7 +1339,7 @@ periodics:
   extra_refs:
   - org: kubernetes-sigs
     repo: cluster-api-provider-azure
-    base_ref: release-1.11
+    base_ref: release-1.12
     path_alias: sigs.k8s.io/cluster-api-provider-azure
     workdir: true
   - org: kubernetes
@@ -1377,7 +1377,7 @@ periodics:
       - name: CONTROL_PLANE_MACHINE_COUNT # CAPZ config
         value: "1"
       - name: CLUSTER_TEMPLATE # CAPZ config
-        value: https://raw.githubusercontent.com/kubernetes-sigs/cluster-api-provider-azure/release-1.11/templates/test/ci/cluster-template-prow-machine-pool-ci-version.yaml
+        value: https://raw.githubusercontent.com/kubernetes-sigs/cluster-api-provider-azure/release-1.12/templates/test/ci/cluster-template-prow-machine-pool-ci-version.yaml
       - name: AZURE_LOADBALANCER_SKU # cloud-provider-azure config
         value: "Standard"
       - name: CLUSTER_PROVISIONING_TOOL # cloud-provider-azure config
@@ -1404,7 +1404,7 @@ periodics:
   extra_refs:
   - org: kubernetes-sigs
     repo: cluster-api-provider-azure
-    base_ref: release-1.11
+    base_ref: release-1.12
     path_alias: sigs.k8s.io/cluster-api-provider-azure
     workdir: true
   - org: kubernetes
@@ -1439,11 +1439,11 @@ periodics:
         value: "latest"
       - name: GINKGO_ARGS # cloud-provider-azure config
         # Check https://github.com/kubernetes-sigs/cloud-provider-azure/issues/224 for the status of each skipped test
-        value: --ginkgo.focus=\[Serial\]|\[Disruptive\] --ginkgo.skip=\[Flaky\]|\[Feature:.+\]|regular.resource.usage.tracking.resource.tracking.for|validates.MaxPods.limit.number.of.pods.that.are.allowed.to.run|In-tree.Volumes|RuntimeClass.should.run.a.Pod.requesting.a.RuntimeClass.with.scheduling.with.taints|Multi-AZ.Clusters.should.spread.the.pods.of.a.replication.controller.across.zones|Multi-AZ.Clusters.should.spread.the.pods.of.a.service.across.zones|Should.test.that.pv.used.in.a.pod.that.is.deleted.while.the.kubelet.is.down.cleans.up.when.the.kubelet.returns|Should.test.that.pv.used.in.a.pod.that.is.force.deleted.while.the.kubelet.is.down.cleans.up.when.the.kubelet.returns|Should.test.that.pv.written.before.kubelet.restart.is.readable.after.restart|subPath.should.unmount.if.pod.is.force.deleted.while.kubelet.is.down|subPath.should.unmount.if.pod.is.gracefully.deleted.while.kubelet.is.down|Should.test.that.pv.written.before.kubelet.restart.is.readable.after.restart --report-dir=/logs/artifacts --disable-log-dump=true
+        value: --ginkgo.focus=\[Serial\]|\[Disruptive\] --ginkgo.skip=\[Flaky\]|\[Feature:.+\]|regular.resource.usage.tracking.resource.tracking.for|validates.MaxPods.limit.number.of.pods.that.are.allowed.to.run|In-tree.Volumes|RuntimeClass.should.run.a.Pod.requesting.a.RuntimeClass.with.scheduling.with.taints|Multi-AZ.Clusters.should.spread.the.pods.of.a.replication.controller.across.zones|Multi-AZ.Clusters.should.spread.the.pods.of.a.service.across.zones|Should.test.that.pv.used.in.a.pod.that.is.deleted.while.the.kubelet.is.down.cleans.up.when.the.kubelet.returns|Should.test.that.pv.used.in.a.pod.that.is.force.deleted.while.the.kubelet.is.down.cleans.up.when.the.kubelet.returns|Should.test.that.pv.written.before.kubelet.restart.is.readable.after.restart|subPath.should.unmount.if.pod.is.force.deleted.while.kubelet.is.down|subPath.should.unmount.if.pod.is.gracefully.deleted.while.kubelet.is.down|Should.test.that.pv.written.before.kubelet.restart.is.readable.after.restart|Kube-proxy.should.recover.after.being.killed.accidentally|Kubelet.should.not.restart.containers.across.restart --report-dir=/logs/artifacts --disable-log-dump=true
       - name: CONTROL_PLANE_MACHINE_COUNT # CAPZ config
         value: "1"
       - name: CLUSTER_TEMPLATE # CAPZ config
-        value: https://raw.githubusercontent.com/kubernetes-sigs/cluster-api-provider-azure/release-1.11/templates/test/ci/cluster-template-prow-machine-pool-ci-version.yaml
+        value: https://raw.githubusercontent.com/kubernetes-sigs/cluster-api-provider-azure/release-1.12/templates/test/ci/cluster-template-prow-machine-pool-ci-version.yaml
       - name: AZURE_LOADBALANCER_SKU # cloud-provider-azure config
         value: "Standard"
       - name: CLUSTER_PROVISIONING_TOOL # cloud-provider-azure config
@@ -1538,7 +1538,7 @@ periodics:
   extra_refs:
   - org: kubernetes-sigs
     repo: cluster-api-provider-azure
-    base_ref: release-1.11
+    base_ref: release-1.12
     path_alias: sigs.k8s.io/cluster-api-provider-azure
     workdir: true
   - org: kubernetes
@@ -1576,7 +1576,7 @@ periodics:
       - name: CONTROL_PLANE_MACHINE_COUNT # CAPZ config
         value: "1"
       - name: CLUSTER_TEMPLATE # CAPZ config
-        value: https://raw.githubusercontent.com/kubernetes-sigs/cluster-api-provider-azure/release-1.11/templates/test/ci/cluster-template-prow-machine-pool-ci-version.yaml
+        value: https://raw.githubusercontent.com/kubernetes-sigs/cluster-api-provider-azure/release-1.12/templates/test/ci/cluster-template-prow-machine-pool-ci-version.yaml
       - name: AZURE_LOADBALANCER_SKU # cloud-provider-azure config
         value: "Standard"
       - name: CLUSTER_PROVISIONING_TOOL # cloud-provider-azure config
