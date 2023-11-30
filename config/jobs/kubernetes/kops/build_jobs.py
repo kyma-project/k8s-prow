@@ -881,14 +881,13 @@ def generate_misc():
                    kops_version="https://storage.googleapis.com/kops-ci/bin/latest-ci.txt",
                    kops_channel="alpha",
                    extra_flags=[
-                       "--image=137112412989/al2023-ami-2023.2.20230920.1-kernel-6.1-x86_64", # pylint: disable=line-too-long
                        "--set=spec.nodeProblemDetector.enabled=true",
                        "--set=spec.packages=nfs-utils",
                    ],
                    skip_regex=r'\[Slow\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]', # pylint: disable=line-too-long
                    test_timeout_minutes=60,
                    test_args="--master-os-distro=gci --node-os-distro=gci",
-                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops"],
+                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops", "amazon-ec2-al2023"],
                    runs_per_day=8),
 
         build_test(name_override="ci-kubernetes-e2e-ubuntu-aws-canary",
@@ -936,14 +935,13 @@ def generate_misc():
                    kops_channel="alpha",
                    build_cluster="k8s-infra-prow-build",
                    extra_flags=[
-                       "--image=137112412989/al2023-ami-2023.2.20230920.1-kernel-6.1-x86_64",
                        "--set=spec.packages=nfs-utils",
                    ],
                    focus_regex=r'\[Slow\]',
                    skip_regex=r'\[Driver:.gcepd\]|\[Serial\]|\[Disruptive\]|\[Flaky\]|\[Feature:.+\]', # pylint: disable=line-too-long
                    test_timeout_minutes=150,
                    test_args="--master-os-distro=gci --node-os-distro=gci",
-                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops"],
+                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops", "amazon-ec2-al2023"],
                    runs_per_day=6),
 
         build_test(name_override="ci-kubernetes-e2e-cos-gce-conformance-canary",
@@ -978,7 +976,6 @@ def generate_misc():
                    kops_channel="alpha",
                    build_cluster="k8s-infra-prow-build",
                    extra_flags=[
-                       "--image=137112412989/al2023-ami-2023.2.20230920.1-kernel-6.1-x86_64",
                        "--set=spec.kubeAPIServer.logLevel=4",
                        "--set=spec.kubeAPIServer.auditLogMaxSize=2000000000",
                        "--set=spec.kubeAPIServer.enableAggregatorRouting=true",
@@ -989,7 +986,51 @@ def generate_misc():
                    test_args="--master-os-distro=gci --node-os-distro=gci",
                    test_timeout_minutes=200,
                    test_parallelism=1, # serial tests
-                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops"],
+                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops", "amazon-ec2-al2023"],
+                   runs_per_day=6),
+
+        build_test(name_override="ci-kubernetes-e2e-al2023-aws-conformance-aws-cni-canary",
+                   cloud="aws",
+                   distro="al2023",
+                   networking="amazonvpc",
+                   k8s_version="ci",
+                   kops_version="https://storage.googleapis.com/kops-ci/bin/latest-ci.txt",
+                   kops_channel="alpha",
+                   build_cluster="k8s-infra-prow-build",
+                   extra_flags=[
+                       "--set=spec.kubeAPIServer.logLevel=4",
+                       "--set=spec.kubeAPIServer.auditLogMaxSize=2000000000",
+                       "--set=spec.kubeAPIServer.enableAggregatorRouting=true",
+                       "--set=spec.kubeAPIServer.auditLogPath=/var/log/kube-apiserver-audit.log",
+                   ],
+                   focus_regex=r'\[Conformance\]',
+                   skip_regex=r'\[FOOBAR\]', # leaving it empty will allow kops to add extra skips
+                   test_args="--master-os-distro=gci --node-os-distro=gci",
+                   test_timeout_minutes=200,
+                   test_parallelism=1, # serial tests
+                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops", "amazon-ec2-al2023"],
+                   runs_per_day=6),
+
+        build_test(name_override="ci-kubernetes-e2e-al2023-aws-conformance-cilium-canary",
+                   cloud="aws",
+                   distro="al2023",
+                   networking="cilium",
+                   k8s_version="ci",
+                   kops_version="https://storage.googleapis.com/kops-ci/bin/latest-ci.txt",
+                   kops_channel="alpha",
+                   build_cluster="k8s-infra-prow-build",
+                   extra_flags=[
+                       "--set=spec.kubeAPIServer.logLevel=4",
+                       "--set=spec.kubeAPIServer.auditLogMaxSize=2000000000",
+                       "--set=spec.kubeAPIServer.enableAggregatorRouting=true",
+                       "--set=spec.kubeAPIServer.auditLogPath=/var/log/kube-apiserver-audit.log",
+                   ],
+                   focus_regex=r'\[Conformance\]',
+                   skip_regex=r'\[FOOBAR\]', # leaving it empty will allow kops to add extra skips
+                   test_args="--master-os-distro=gci --node-os-distro=gci",
+                   test_timeout_minutes=200,
+                   test_parallelism=1, # serial tests
+                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops", "amazon-ec2-al2023"],
                    runs_per_day=6),
 
         build_test(name_override="ci-kubernetes-e2e-cos-gce-disruptive-canary",
@@ -1040,15 +1081,12 @@ def generate_misc():
                    kops_version="https://storage.googleapis.com/kops-ci/bin/latest-ci.txt",
                    kops_channel="alpha",
                    build_cluster="k8s-infra-prow-build",
-                   extra_flags=[
-                       "--image=137112412989/al2023-ami-2023.2.20230920.1-kernel-6.1-x86_64",
-                   ],
                    focus_regex=r'\[Disruptive\]',
                    skip_regex=r'\[Driver:.gcepd\]|\[Flaky\]|\[Feature:.+\]', # pylint: disable=line-too-long
                    test_timeout_minutes=500,
                    test_parallelism=1, # serial tests
                    test_args="--master-os-distro=ubuntu --node-os-distro=ubuntu",
-                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops"],
+                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops", "amazon-ec2-al2023"],
                    runs_per_day=3),
 
         build_test(name_override="ci-kubernetes-e2e-cos-gce-serial-canary",
@@ -1083,7 +1121,6 @@ def generate_misc():
                    kops_channel="alpha",
                    build_cluster="k8s-infra-prow-build",
                    extra_flags=[
-                       "--image=137112412989/al2023-ami-2023.2.20230920.1-kernel-6.1-x86_64",
                        "--node-volume-size=100",
                        "--set=spec.packages=nfs-utils",
                    ],
@@ -1092,7 +1129,7 @@ def generate_misc():
                    test_timeout_minutes=600,
                    test_parallelism=1, # serial tests
                    test_args="--master-os-distro=ubuntu --node-os-distro=ubuntu",
-                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops"],
+                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops", "amazon-ec2-al2023"],
                    runs_per_day=4),
 
         build_test(name_override="ci-kubernetes-e2e-al2023-aws-alpha-features",
@@ -1104,7 +1141,6 @@ def generate_misc():
                    kops_channel="alpha",
                    build_cluster="k8s-infra-prow-build",
                    extra_flags=[
-                       "--image=137112412989/al2023-ami-2023.2.20230920.1-kernel-6.1-x86_64", # pylint: disable=line-too-long
                        "--set=spec.kubeAPIServer.logLevel=4",
                        "--set=spec.kubeAPIServer.auditLogMaxSize=2000000000",
                        "--set=spec.kubeAPIServer.enableAggregatorRouting=true",
@@ -1117,7 +1153,7 @@ def generate_misc():
                    test_timeout_minutes=240,
                    test_parallelism=4,
                    test_args="--master-os-distro=gci --node-os-distro=gci",
-                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops"],
+                   extra_dashboards=["sig-cluster-lifecycle-kubeup-to-kops", "amazon-ec2-al2023"],
                    runs_per_day=6),
 
         build_test(name_override="ci-kubernetes-e2e-cos-gce-alpha-features",
