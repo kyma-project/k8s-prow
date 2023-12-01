@@ -994,7 +994,8 @@ def generate_misc():
                    distro="al2023",
                    networking="amazonvpc",
                    k8s_version="ci",
-                   kops_version="https://storage.googleapis.com/kops-ci/bin/latest-ci.txt",
+                   kops_version="https://storage.googleapis.com/k8s-staging-kops/kops/releases/markers/master/latest-ci.txt", # pylint: disable=line-too-long
+                   cluster_name="kubernetes-e2e-al2023-aws-conformance-aws-cni.k8s.local",
                    kops_channel="alpha",
                    build_cluster="k8s-infra-prow-build",
                    extra_flags=[
@@ -1016,7 +1017,8 @@ def generate_misc():
                    distro="al2023",
                    networking="cilium",
                    k8s_version="ci",
-                   kops_version="https://storage.googleapis.com/kops-ci/bin/latest-ci.txt",
+                   kops_version="https://storage.googleapis.com/k8s-staging-kops/kops/releases/markers/master/latest-ci.txt", # pylint: disable=line-too-long
+                   cluster_name="kubernetes-e2e-al2023-aws-conformance-cilium.k8s.local",
                    kops_channel="alpha",
                    build_cluster="k8s-infra-prow-build",
                    extra_flags=[
@@ -1295,7 +1297,8 @@ def generate_network_plugins():
         networking_arg = plugin.replace('amazon-vpc', 'amazonvpc').replace('kuberouter', 'kube-router') # pylint: disable=line-too-long
         k8s_version = 'stable'
         distro = 'u2204'
-        if plugin == 'amazon-vpc':
+        # https://github.com/kubernetes/kops/issues/15720
+        if plugin in ('amazon-vpc', 'cilium-eni'):
             distro = 'u2004'
         if plugin in ['canal', 'flannel']:
             k8s_version = '1.27'
@@ -1589,7 +1592,8 @@ def generate_presubmits_network_plugins():
         if plugin == 'cilium-eni':
             focus_regex = r'\[Conformance\]|\[NodeConformance\]'
             optional = True
-        if plugin == 'amazonvpc':
+        # https://github.com/kubernetes/kops/issues/15720
+        if plugin in ('amazonvpc', 'cilium-eni'):
             distro = 'u2004'
             optional = True
         if plugin in ['canal', 'flannel']:
