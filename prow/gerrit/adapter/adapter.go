@@ -46,6 +46,7 @@ import (
 const (
 	inRepoConfigRetries = 2
 	inRepoConfigFailed  = "Unable to get inRepoConfig. This could be due to a merge conflict (please resolve them), an inRepoConfig parsing error (incorrect formatting) in the .prow directory or .prow.yaml file, or a flake. For possible flakes, try again with /test all"
+	noLongerWIP         = "Set Ready For Review"
 )
 
 var gerritMetrics = struct {
@@ -263,7 +264,7 @@ func (c *Controller) processChange(latest client.LastSyncState, changeChan <-cha
 		now := time.Now()
 
 		result := client.ResultSuccess
-		if !c.shouldSkipProcessingChange(change, lastProjectSyncTime) {
+		if c.shouldTriggerJobs(change, lastProjectSyncTime) {
 			if err := c.triggerJobs(log, instance, change); err != nil {
 				result = client.ResultError
 				log.WithError(err).Info("Failed to trigger jobs based on change")
@@ -416,12 +417,9 @@ func CreateRefs(instance, project, branch, baseSHA string, changes ...client.Cha
 	var refs prowapi.Refs
 	cloneURI := source.CloneURIFromOrgRepo(instance, project)
 
-	var codeHost string // Something like https://android.googlesource.com
-	parts := strings.SplitN(instance, ".", 2)
-	codeHost = strings.TrimSuffix(parts[0], "-review")
-	if len(parts) > 1 {
-		codeHost += "." + parts[1]
-	}
+	// Something like https://android.googlesource.com
+	codeHost := source.EnsureCodeURL(instance)
+
 	refs = prowapi.Refs{
 		Org:      instance, // Something like android-review.googlesource.com
 		Repo:     project,  // Something like platform/build
@@ -539,24 +537,28 @@ func (c *Controller) handleInRepoConfigError(err error, instance string, change 
 	return nil
 }
 
-// shouldSkipProcessingChange returns true when there is no new commit or relevant commands in the comment messages
-func (c *Controller) shouldSkipProcessingChange(change client.ChangeInfo, lastProjectSyncTime time.Time) bool {
+// shouldTriggerJobs returns true if we should trigger jobs for the given
+// change.
+func (c *Controller) shouldTriggerJobs(change client.ChangeInfo, lastProjectSyncTime time.Time) bool {
 	// do not skip postsubmit jobs
 	if change.Status == client.Merged {
-		return false
+		return true
 	}
 	revision := change.Revisions[change.CurrentRevision]
 	if revision.Created.After(lastProjectSyncTime) {
-		return false
+		return true
 	}
 
 	for _, message := range currentMessages(change, lastProjectSyncTime) {
 		if c.messageContainsJobTriggeringCommand(message) {
-			return false
+			return true
+		}
+		if message.Message == noLongerWIP {
+			return true
 		}
 	}
 
-	return true
+	return false
 }
 
 func (c *Controller) messageContainsJobTriggeringCommand(message gerrit.ChangeMessageInfo) bool {
