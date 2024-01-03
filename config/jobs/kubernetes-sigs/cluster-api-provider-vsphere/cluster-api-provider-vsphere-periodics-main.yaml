@@ -14,7 +14,7 @@ periodics:
     path_alias: sigs.k8s.io/cluster-api-provider-vsphere
   spec:
     containers:
-    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231206-f7b83ffbe6-1.27
+    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231208-8b9fd88e88-1.27
       resources:
         limits:
           cpu: 2
@@ -52,7 +52,7 @@ periodics:
     path_alias: sigs.k8s.io/cluster-api-provider-vsphere
   spec:
     containers:
-    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231206-f7b83ffbe6-1.27
+    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231208-8b9fd88e88-1.27
       # we need privileged mode in order to do docker in docker
       securityContext:
         privileged: true
@@ -85,6 +85,8 @@ periodics:
     preset-kind-volume-mounts: "true"
   interval: 24h
   decorate: true
+  decoration_config:
+    timeout: 180m
   rerun_auth_config:
     github_team_slugs:
     - org: kubernetes-sigs
@@ -96,7 +98,7 @@ periodics:
     path_alias: sigs.k8s.io/cluster-api-provider-vsphere
   spec:
     containers:
-    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231206-f7b83ffbe6-1.27
+    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231208-8b9fd88e88-1.27
       command:
       - runner.sh
       args:
@@ -139,7 +141,7 @@ periodics:
     path_alias: sigs.k8s.io/cluster-api-provider-vsphere
   spec:
     containers:
-    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231206-f7b83ffbe6-1.27
+    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231208-8b9fd88e88-1.27
       command:
       - runner.sh
       args:
@@ -182,7 +184,7 @@ periodics:
     path_alias: k8s.io/test-infra
   spec:
     containers:
-    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231206-f7b83ffbe6-1.27
+    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231208-8b9fd88e88-1.27
       command:
       - runner.sh
       - bash
