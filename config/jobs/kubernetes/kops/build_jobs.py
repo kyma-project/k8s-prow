@@ -33,7 +33,7 @@ from helpers import ( # pylint: disable=import-error, no-name-in-module
 skip_jobs = [
 ]
 
-image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20231208-8b9fd88e88-master"
+image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240111-cf1d81388e-master"
 
 loader = jinja2.FileSystemLoader(searchpath="./templates")
 
@@ -64,6 +64,7 @@ def build_test(cloud='aws',
                scenario=None,
                env=None,
                kubernetes_feature_gates=None,
+               pod_service_account=None,
                build_cluster="default",
                cluster_name=None,
                template_path=None,
@@ -121,7 +122,7 @@ def build_test(cloud='aws',
             extra_flags = []
         extra_flags.append("--discovery-store=s3://k8s-kops-prow/discovery")
 
-    marker, k8s_deploy_url, test_package_bucket, test_package_dir = k8s_version_info(k8s_version)
+    marker, k8s_deploy_url, test_package_url, test_package_dir = k8s_version_info(k8s_version)
     args = create_args(kops_channel, networking, extra_flags, kops_image)
 
     node_ig_overrides = ""
@@ -144,9 +145,12 @@ def build_test(cloud='aws',
     if scenario is not None:
         tmpl_file = "periodic-scenario.yaml.jinja"
         name_hash = hashlib.md5(job_name.encode()).hexdigest()
+        build_cluster = "k8s-infra-kops-prow-build"
         env['CLOUD_PROVIDER'] = cloud
-        env['CLUSTER_NAME'] = f"e2e-{name_hash[0:10]}-{name_hash[12:17]}.test-cncf-aws.k8s.io"
-        env['KOPS_STATE_STORE'] = 's3://k8s-kops-prow'
+        env['CLUSTER_NAME'] = f"e2e-{name_hash[0:10]}-{name_hash[12:17]}.tests-kops-aws.k8s.io"
+        env['DISCOVERY_STORE'] = "s3://k8s-kops-ci-prow"
+        env['KOPS_DNS_DOMAIN'] = "tests-kops-aws.k8s.io"
+        env['KOPS_STATE_STORE'] = "s3://k8s-kops-ci-prow-state-store"
         env['KUBE_SSH_USER'] = kops_ssh_user
         if extra_flags:
             env['KOPS_EXTRA_FLAGS'] = " ".join(extra_flags)
@@ -173,7 +177,7 @@ def build_test(cloud='aws',
         skip_regex=skip_regex,
         kops_feature_flags=','.join(feature_flags),
         terraform_version=terraform_version,
-        test_package_bucket=test_package_bucket,
+        test_package_url=test_package_url,
         test_package_dir=test_package_dir,
         focus_regex=focus_regex,
         publish_version_marker=publish_version_marker,
@@ -184,6 +188,7 @@ def build_test(cloud='aws',
         build_cluster=build_cluster,
         kubernetes_feature_gates=kubernetes_feature_gates,
         test_args=test_args,
+        pod_service_account=pod_service_account,
         cluster_name=cluster_name,
         storage_e2e_cred=storage_e2e_cred,
     )
@@ -294,7 +299,7 @@ def presubmit_test(branch='master',
     if irsa and cloud == "aws" and scenario is None:
         extra_flags.append("--discovery-store=s3://k8s-kops-prow/discovery")
 
-    marker, k8s_deploy_url, test_package_bucket, test_package_dir = k8s_version_info(k8s_version)
+    marker, k8s_deploy_url, test_package_url, test_package_dir = k8s_version_info(k8s_version)
     args = create_args(kops_channel, networking, extra_flags, kops_image)
 
     # Scenario-specific parameters
@@ -331,7 +336,7 @@ def presubmit_test(branch='master',
         skip_regex=skip_regex,
         kops_feature_flags=','.join(feature_flags),
         terraform_version=terraform_version,
-        test_package_bucket=test_package_bucket,
+        test_package_url=test_package_url,
         test_package_dir=test_package_dir,
         focus_regex=focus_regex,
         run_if_changed=run_if_changed,
@@ -526,6 +531,7 @@ def generate_misc():
         # A special test for Calico CNI on Debian 11
         build_test(name_override="kops-aws-cni-calico-deb11",
                    cloud="aws",
+                   build_cluster="k8s-infra-kops-prow-build",
                    distro="deb11",
                    k8s_version="stable",
                    networking="calico",
@@ -1414,21 +1420,6 @@ def generate_upgrades():
         )
     return results
 
-################################
-# kops-periodics-scale.yaml #
-################################
-def generate_scale():
-    results = [
-        build_test(
-            name_override='kops-aws-scale-amazonvpc',
-            extra_dashboards=[],
-            runs_per_day=1,
-            networking='amazonvpc',
-            scenario='scalability',
-        )
-    ]
-    return results
-
 ###############################
 # kops-presubmits-scale.yaml #
 ###############################
@@ -2167,7 +2158,6 @@ periodics_files = {
     'kops-periodics-grid.yaml': generate_grid,
     'kops-periodics-misc2.yaml': generate_misc,
     'kops-periodics-network-plugins.yaml': generate_network_plugins,
-    'kops-periodics-scale.yaml': generate_scale,
     'kops-periodics-upgrades.yaml': generate_upgrades,
     'kops-periodics-versions.yaml': generate_versions,
     'kops-periodics-pipeline.yaml': generate_pipeline,
