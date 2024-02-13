@@ -33,7 +33,7 @@ from helpers import ( # pylint: disable=import-error, no-name-in-module
 skip_jobs = [
 ]
 
-image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240209-9cf7b68bc9-master"
+image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master"
 
 loader = jinja2.FileSystemLoader(searchpath="./templates")
 
@@ -1805,6 +1805,13 @@ def generate_presubmits_e2e():
             k8s_version='stable',
             kops_channel='alpha',
             name='pull-kops-e2e-k8s-aws-amazonvpc',
+            extra_flags=[
+                "--node-size=r5d.xlarge",
+                "--master-size=r5d.xlarge",
+                "--set cluster.spec.networking.amazonVPC.env=ENABLE_PREFIX_DELEGATION=true",
+                "--set cluster.spec.networking.amazonVPC.env=MINIMUM_IP_TARGET=80",
+                "--set cluster.spec.networking.amazonVPC.env=WARM_IP_TARGET=10"
+            ],
             networking='amazonvpc',
             tab_name='e2e-aws-amazonvpc',
             always_run=False,
