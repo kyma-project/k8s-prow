@@ -44,10 +44,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -120,10 +120,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -190,10 +190,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -266,10 +266,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -336,10 +336,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -412,10 +412,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -482,10 +482,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -558,10 +558,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -628,10 +628,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -704,10 +704,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -774,10 +774,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -850,10 +850,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -920,10 +920,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -996,10 +996,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1066,10 +1066,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1142,10 +1142,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1212,10 +1212,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1288,10 +1288,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1358,10 +1358,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1434,10 +1434,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1504,10 +1504,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1580,10 +1580,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1650,10 +1650,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1726,10 +1726,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1796,10 +1796,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1872,10 +1872,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -1942,10 +1942,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2018,10 +2018,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2088,10 +2088,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2164,10 +2164,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2234,10 +2234,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2310,10 +2310,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2380,10 +2380,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2456,10 +2456,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2526,10 +2526,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2602,10 +2602,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2672,10 +2672,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2748,10 +2748,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2818,10 +2818,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2894,10 +2894,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -2964,10 +2964,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -3040,10 +3040,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -3110,10 +3110,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
@@ -3180,10 +3180,10 @@ periodics:
         value: "s3://k8s-kops-ci-prow"
       - name: KOPS_DNS_DOMAIN
         value: "tests-kops-aws.k8s.io"
-      - name: KOPS_STATE_STORE
-        value: "s3://k8s-kops-ci-prow-state-store"
       - name: KUBE_SSH_USER
         value: "ubuntu"
+      - name: KOPS_STATE_STORE
+        value: "s3://k8s-kops-prow"
       - name: KOPS_IRSA
         value: "true"
       image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240211-f101bf4199-master
