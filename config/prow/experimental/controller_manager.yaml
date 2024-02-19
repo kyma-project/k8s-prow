@@ -22,7 +22,7 @@ spec:
         - --config-path=/etc/config/config.yaml
         - --job-config-path=/etc/job-config
         - --dry-run=false
-        image: gcr.io/k8s-prow/prow-controller-manager:v20240215-16c1a27d58
+        image: gcr.io/k8s-prow/prow-controller-manager:v20240216-16ababd181
         volumeMounts:
         - name: config
           mountPath: /etc/config
@@ -88,10 +88,12 @@ rules:
     resources:
       - pods
     verbs:
-      - delete
-      - list
-      - watch
       - create
+      - delete
+      - get
+      - list
+      - patch
+      - watch
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
