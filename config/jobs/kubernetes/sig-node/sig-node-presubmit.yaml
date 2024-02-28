@@ -573,6 +573,7 @@ presubmits:
               cpu: 4
               memory: 6Gi
   - name: pull-kubernetes-node-kubelet-serial-containerd-alpha-features
+    cluster: k8s-infra-prow-build
     always_run: false
     optional: true
     skip_report: false
@@ -619,6 +620,7 @@ presubmits:
               cpu: 4
               memory: 6Gi
   - name: pull-kubernetes-node-kubelet-serial-containerd-sidecar-containers
+    cluster: k8s-infra-prow-build
     always_run: false
     optional: true
     skip_report: false
@@ -2535,6 +2537,7 @@ presubmits:
   #     Until then, this job complements pull-kubernetes-e2e-gce-cos-alpha-features by running inplace pod resize e2e tests
   #     full-spectrum against containerd/main which has the necessary CRI support.
   - name: pull-kubernetes-e2e-inplace-pod-resize-containerd-main-v2
+    cluster: k8s-infra-prow-build
     optional: true
     always_run: false
     run_if_changed: 'test/e2e/node/pod_resize.go|pkg/kubelet/kubelet.go|pkg/kubelet/kubelet_pods.go|pkg/kubelet/kuberuntime/kuberuntime_manager.go'
