@@ -48,7 +48,7 @@ periodics:
         value: /etc/aws-ssh/aws-ssh-private
       - name: KUBE_SSH_USER
         value: ubuntu
-      image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
       imagePullPolicy: Always
       resources:
         limits:
@@ -76,7 +76,7 @@ periodics:
     preset-service-account: "true"
     preset-aws-ssh: "true"
     preset-aws-credential: "true"
-  cluster: default
+  cluster: k8s-infra-kops-prow-build
   decorate: true
   decoration_config:
     timeout: 90m
@@ -112,7 +112,7 @@ periodics:
         value: /etc/aws-ssh/aws-ssh-private
       - name: KUBE_SSH_USER
         value: ubuntu
-      image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
       imagePullPolicy: Always
       resources:
         limits:
@@ -140,7 +140,7 @@ periodics:
     preset-service-account: "true"
     preset-aws-ssh: "true"
     preset-aws-credential: "true"
-  cluster: default
+  cluster: k8s-infra-kops-prow-build
   decorate: true
   decoration_config:
     timeout: 90m
@@ -176,7 +176,7 @@ periodics:
         value: /etc/aws-ssh/aws-ssh-private
       - name: KUBE_SSH_USER
         value: ubuntu
-      image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
       imagePullPolicy: Always
       resources:
         limits:
@@ -204,7 +204,7 @@ periodics:
     preset-service-account: "true"
     preset-aws-ssh: "true"
     preset-aws-credential: "true"
-  cluster: default
+  cluster: k8s-infra-kops-prow-build
   decorate: true
   decoration_config:
     timeout: 90m
@@ -240,7 +240,7 @@ periodics:
         value: /etc/aws-ssh/aws-ssh-private
       - name: KUBE_SSH_USER
         value: ubuntu
-      image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
       imagePullPolicy: Always
       resources:
         limits:
@@ -268,7 +268,7 @@ periodics:
     preset-service-account: "true"
     preset-aws-ssh: "true"
     preset-aws-credential: "true"
-  cluster: default
+  cluster: k8s-infra-kops-prow-build
   decorate: true
   decoration_config:
     timeout: 90m
@@ -304,7 +304,7 @@ periodics:
         value: /etc/aws-ssh/aws-ssh-private
       - name: KUBE_SSH_USER
         value: ubuntu
-      image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
       imagePullPolicy: Always
       resources:
         limits:
@@ -332,7 +332,7 @@ periodics:
     preset-service-account: "true"
     preset-aws-ssh: "true"
     preset-aws-credential: "true"
-  cluster: default
+  cluster: k8s-infra-kops-prow-build
   decorate: true
   decoration_config:
     timeout: 90m
@@ -368,7 +368,7 @@ periodics:
         value: /etc/aws-ssh/aws-ssh-private
       - name: KUBE_SSH_USER
         value: ubuntu
-      image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
       imagePullPolicy: Always
       resources:
         limits:

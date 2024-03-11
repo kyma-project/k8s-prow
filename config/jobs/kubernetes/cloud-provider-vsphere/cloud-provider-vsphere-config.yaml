@@ -39,10 +39,11 @@ presubmits:
     path_alias: k8s.io/cloud-provider-vsphere
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
         command:
-        - make
+        - runner.sh
         args:
+        - make
         - fmt
         resources:
           limits:
@@ -69,10 +70,11 @@ presubmits:
     path_alias: k8s.io/cloud-provider-vsphere
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
         command:
-        - make
+        - runner.sh
         args:
+        - make
         - lint
         resources:
           limits:
@@ -99,10 +101,11 @@ presubmits:
     path_alias: k8s.io/cloud-provider-vsphere
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
         command:
-        - make
+        - runner.sh
         args:
+        - make
         - vet
         resources:
           limits:
@@ -184,10 +187,11 @@ presubmits:
     path_alias: k8s.io/cloud-provider-vsphere
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
         command:
-        - make
+        - runner.sh
         args:
+        - make
         - staticcheck
         resources:
           limits:
@@ -217,11 +221,12 @@ presubmits:
     skip_report: false
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
         command:
-        - "make"
+        - runner.sh
         args:
-        - "build"
+        - make
+        - build
         resources:
           limits:
             cpu: 2
@@ -248,11 +253,12 @@ presubmits:
     skip_report: false
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
         command:
-        - "make"
+        - runner.sh
         args:
-        - "unit-test"
+        - make
+        - unit-test
         resources:
           limits:
             cpu: 2
@@ -282,11 +288,12 @@ presubmits:
     skip_report: false
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
         command:
-        - "make"
+        - runner.sh
         args:
-        - "integration-test"
+        - make
+        - integration-test
         securityContext:
           privileged: true
         resources:
@@ -317,7 +324,7 @@ presubmits:
       path_alias: k8s.io/test-infra
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
         command:
         - runner.sh
         - bash
@@ -369,7 +376,7 @@ presubmits:
     optional: true
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
         command:
         - runner.sh
         args:
@@ -403,7 +410,7 @@ presubmits:
     optional: true
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
         command:
         - runner.sh
         args:
@@ -441,14 +448,15 @@ postsubmits:
     skip_submodules: true
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
         resources:
           requests:
             cpu: "1000m"
         command:
-        - "make"
+        - runner.sh
         args:
-        - "release-push"
+        - make
+        - release-push
         securityContext:
           privileged: true
     annotations:
@@ -472,14 +480,15 @@ postsubmits:
     skip_submodules: true
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
         resources:
           requests:
             cpu: "1000m"
         command:
-        - "make"
+        - runner.sh
         args:
-        - "release-push"
+        - make
+        - release-push
         securityContext:
           privileged: true
     annotations:

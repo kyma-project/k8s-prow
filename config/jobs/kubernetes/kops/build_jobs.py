@@ -33,7 +33,7 @@ from helpers import ( # pylint: disable=import-error, no-name-in-module
 skip_jobs = [
 ]
 
-image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240223-1ded72f317-master"
+image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master"
 
 loader = jinja2.FileSystemLoader(searchpath="./templates")
 
@@ -454,6 +454,7 @@ def generate_grid():
                         continue
                     results.append(
                         build_test(cloud="aws",
+                                   build_cluster="k8s-infra-kops-prow-build",
                                    distro=distro,
                                    extra_dashboards=['kops-grid'],
                                    k8s_version=k8s_version,
@@ -1327,6 +1328,8 @@ def generate_conformance():
     for version in ['1.29', '1.28', '1.27']:
         results.append(
             build_test(
+                cloud='aws',
+                build_cluster='k8s-infra-kops-prow-build',
                 k8s_version=version,
                 kops_version=version,
                 kops_channel='alpha',
@@ -1338,11 +1341,12 @@ def generate_conformance():
                 runs_per_day=1,
                 focus_regex=r'\[Conformance\]',
                 skip_regex=r'\[NoSkip\]',
-                build_cluster='k8s-infra-kops-prow-build',
             )
         )
         results.append(
             build_test(
+                cloud='aws',
+                build_cluster='k8s-infra-kops-prow-build',
                 k8s_version=version,
                 kops_version=version,
                 kops_channel='alpha',
@@ -1765,6 +1769,8 @@ def generate_versions():
     for version in ['1.29', '1.28', '1.27', '1.26', '1.25']:
         results.append(
             build_test(
+                cloud='aws',
+                build_cluster='k8s-infra-kops-prow-build',
                 k8s_version=version,
                 kops_channel='alpha',
                 name_override=f"kops-aws-k8s-{version.replace('.', '-')}",
@@ -1786,6 +1792,8 @@ def generate_pipeline():
         kops_version = f"https://storage.googleapis.com/k8s-staging-kops/kops/releases/markers/{branch}/latest-ci.txt" # pylint: disable=line-too-long
         results.append(
             build_test(
+                cloud="aws",
+                build_cluster="k8s-infra-kops-prow-build",
                 k8s_version=version.replace('master', 'latest'),
                 kops_version=kops_version,
                 kops_channel='alpha',
