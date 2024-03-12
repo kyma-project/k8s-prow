@@ -26,7 +26,7 @@ periodics:
   spec:
     serviceAccountName: aws-shared-testing-role
     containers:
-    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
+    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240310-bac0a3c105-master
       resources:
         limits:
           cpu: 2
@@ -69,7 +69,7 @@ periodics:
   spec:
     serviceAccountName: aws-shared-testing-role
     containers:
-    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
+    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240310-bac0a3c105-master
       resources:
         limits:
           cpu: 2
@@ -113,7 +113,7 @@ periodics:
   spec:
     serviceAccountName: aws-shared-testing-role
     containers:
-    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
+    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240310-bac0a3c105-master
       resources:
         limits:
           cpu: 8
@@ -193,7 +193,7 @@ periodics:
   spec:
     serviceAccountName: aws-shared-testing-role
     containers:
-    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240307-5387c97ec5-master
+    - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240310-bac0a3c105-master
       resources:
         limits:
           cpu: 8
@@ -225,16 +225,19 @@ periodics:
           docker push "${IMAGE_NAME}:${IMAGE_TAG}"
 
           GOPROXY=direct go install sigs.k8s.io/provider-aws-test-infra/kubetest2-ec2@latest
-          VERSION=$(curl -Ls https://dl.k8s.io/ci/latest.txt)
+          VERSION=$(curl -Ls https://dl.k8s.io/ci/fast/latest-fast.txt)
           kubetest2 ec2 \
-           --stage https://dl.k8s.io/ci/ \
+           --stage https://dl.k8s.io/ci/fast/ \
            --version $VERSION \
            --up \
            --down \
            --test=ginkgo \
            -- \
            --parallel=30 \
-          --focus-regex='Pods should be submitted and removed'
+           --test-package-url=https://dl.k8s.io/ \
+           --test-package-dir=ci/fast \
+           --test-package-marker=latest-fast.txt \
+           --focus-regex='Pods should be submitted and removed'
       env:
         - name: USE_DOCKERIZED_BUILD
           value: "true"
