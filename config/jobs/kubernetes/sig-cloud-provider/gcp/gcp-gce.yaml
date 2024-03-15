@@ -263,7 +263,7 @@ presubmits:
           args:
             - --build=quick
             - --cluster=
-            - --env=KUBE_UBUNTU_INSTALL_CONTAINERD_VERSION=v1.7.13
+            - --env=KUBE_UBUNTU_INSTALL_CONTAINERD_VERSION=v1.7.14
             - --env=KUBE_UBUNTU_INSTALL_RUNC_VERSION=v1.1.12
             - --env=LOG_DUMP_SYSTEMD_SERVICES=containerd
             - --env=CONTAINER_RUNTIME_TEST_HANDLER=true
@@ -331,7 +331,7 @@ presubmits:
             - --build=quick
             - --cluster=
             - --env=KUBE_PROVIDERLESS=y
-            - --env=KUBE_UBUNTU_INSTALL_CONTAINERD_VERSION=v1.7.13
+            - --env=KUBE_UBUNTU_INSTALL_CONTAINERD_VERSION=v1.7.14
             - --env=KUBE_UBUNTU_INSTALL_RUNC_VERSION=v1.1.12
             - --env=LOG_DUMP_SYSTEMD_SERVICES=containerd
             - --env=CONTAINER_RUNTIME_TEST_HANDLER=true
@@ -397,13 +397,13 @@ presubmits:
             - bash
             - -c
             - |
-              ARGS="--set=spec.containerd.runc.version=1.1.9 --set=spec.packages=nfs-common --set=spec.containerd.version=1.7.7"
+              ARGS="--set=spec.containerd.runc.version=1.1.12 --set=spec.packages=nfs-common --set=spec.containerd.version=1.7.13"
               make -C $GOPATH/src/k8s.io/kops test-e2e-install
               kubetest2 kops -v=6 --cloud-provider=gce --up --down --build \
                 --build-kubernetes=true --target-build-arch=linux/amd64 \
                 --admin-access=0.0.0.0/0 \
                 --kops-version-marker=https://storage.googleapis.com/kops-ci/bin/latest-ci.txt \
-                --create-args "$ARGS --networking=kubenet --set=spec.nodeProblemDetector.enabled=true" \
+                --create-args "$ARGS --networking=kubenet --gce-service-account=default --set=spec.nodeProblemDetector.enabled=true" \
                 --test=kops \
                 -- \
                 --ginkgo-args="--debug" \
@@ -516,7 +516,7 @@ presubmits:
           args:
             - --build=quick
             - --cluster=
-            - --env=KUBE_UBUNTU_INSTALL_CONTAINERD_VERSION=v1.7.13
+            - --env=KUBE_UBUNTU_INSTALL_CONTAINERD_VERSION=v1.7.14
             - --env=KUBE_UBUNTU_INSTALL_RUNC_VERSION=v1.1.12
             - --env=LOG_DUMP_SYSTEMD_SERVICES=containerd
             - --env=CONTAINER_RUNTIME_TEST_HANDLER=true
@@ -580,13 +580,13 @@ presubmits:
             - bash
             - -c
             - |
-              ARGS="--set=spec.containerd.runc.version=1.1.9  --set=spec.packages=nfs-common --set=spec.containerd.version=1.7.5"
+              ARGS="--set=spec.containerd.runc.version=1.1.12  --set=spec.packages=nfs-common --set=spec.containerd.version=1.7.13"
               make -C $GOPATH/src/k8s.io/kops test-e2e-install
               kubetest2 kops -v=6 --cloud-provider=gce --up --down --build \
                 --build-kubernetes=true --target-build-arch=linux/amd64 \
                 --admin-access=0.0.0.0/0 \
                 --kops-version-marker=https://storage.googleapis.com/kops-ci/bin/latest-ci.txt \
-                --create-args "$ARGS --node-count=3 --networking=kubenet --set=spec.nodeProblemDetector.enabled=true" \
+                --create-args "$ARGS --node-count=3 --networking=kubenet --gce-service-account=default --set=spec.nodeProblemDetector.enabled=true" \
                 --test=kops \
                 -- \
                 --test-args="-test.timeout=800m --num-nodes=3 --master-os-distro=ubuntu --node-os-distro=ubuntu" \
@@ -640,13 +640,13 @@ presubmits:
             - bash
             - -c
             - |
-              ARGS="--set=spec.containerd.runc.version=1.1.9  --set=spec.packages=nfs-common --set=spec.containerd.version=1.7.5"
+              ARGS="--set=spec.containerd.runc.version=1.1.12  --set=spec.packages=nfs-common --set=spec.containerd.version=1.7.13"
               make -C $GOPATH/src/k8s.io/kops test-e2e-install
               kubetest2 kops -v=6 --cloud-provider=gce --up --down --build \
                 --build-kubernetes=true --target-build-arch=linux/amd64 \
                 --admin-access=0.0.0.0/0 \
                 --kops-version-marker=https://storage.googleapis.com/kops-ci/bin/latest-ci.txt \
-                --create-args "$ARGS --node-count=3 --networking=kubenet --set=spec.nodeProblemDetector.enabled=true" \
+                --create-args "$ARGS --node-count=3 --networking=kubenet --gce-service-account=default --set=spec.nodeProblemDetector.enabled=true" \
                 --test=kops \
                 -- \
                 --test-args="-test.timeout=600m --num-nodes=3 --master-os-distro=ubuntu --node-os-distro=ubuntu" \
@@ -832,7 +832,7 @@ periodics:
           - /workspace/scenarios/kubernetes_e2e.py
         args:
           - --check-leaked-resources
-          - --env=KUBE_UBUNTU_INSTALL_CONTAINERD_VERSION=v1.7.13
+          - --env=KUBE_UBUNTU_INSTALL_CONTAINERD_VERSION=v1.7.14
           - --env=KUBE_UBUNTU_INSTALL_RUNC_VERSION=v1.1.12
           - --env=LOG_DUMP_SYSTEMD_SERVICES=containerd
           - --env=CONTAINER_RUNTIME_TEST_HANDLER=true
