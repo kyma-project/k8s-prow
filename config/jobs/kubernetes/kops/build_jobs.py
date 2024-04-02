@@ -33,7 +33,7 @@ from helpers import ( # pylint: disable=import-error, no-name-in-module
 skip_jobs = [
 ]
 
-image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240311-b09cdeb92c-master"
+image = "gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master"
 
 loader = jinja2.FileSystemLoader(searchpath="./templates")
 
@@ -1803,7 +1803,7 @@ def generate_pipeline():
         results.append(
             build_test(
                 cloud="aws",
-                build_cluster="k8s-infra-kops-prow-build",
+                build_cluster="default",
                 k8s_version=version.replace('master', 'latest'),
                 kops_version=kops_version,
                 kops_channel='alpha',
