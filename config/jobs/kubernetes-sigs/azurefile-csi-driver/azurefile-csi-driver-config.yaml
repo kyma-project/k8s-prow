@@ -9,7 +9,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
         command:
         - runner.sh
         args:
@@ -38,7 +38,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
         command:
         - runner.sh
         args:
@@ -67,7 +67,7 @@ presubmits:
       preset-azure-cred: "true"
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
         command:
         - runner.sh
         args:
@@ -89,7 +89,7 @@ presubmits:
       preset-azure-cred: "true"
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
         command:
         - runner.sh
         args:
@@ -118,7 +118,7 @@ presubmits:
       workdir: true
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
         command:
         - runner.sh
         - kubetest
@@ -162,7 +162,7 @@ presubmits:
       workdir: true
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
         command:
         - runner.sh
         - kubetest
@@ -208,7 +208,7 @@ presubmits:
       workdir: true
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
         command:
         - runner.sh
         - kubetest
@@ -246,8 +246,7 @@ presubmits:
     skip_if_only_changed: "^docs/|^site/|^\\.github/|\\.(md|adoc)$|^(README|LICENSE)$"
     path_alias: sigs.k8s.io/azurefile-csi-driver
     branches:
-    - master
-    - release-1.26
+    - (master)|(^release-.+$)
     labels:
       preset-dind-enabled: "true"
       preset-kind-volume-mounts: "true"
@@ -267,7 +266,7 @@ presubmits:
         workdir: false
     spec:
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
           command:
             - runner.sh
             - ./scripts/ci-entrypoint.sh
@@ -304,7 +303,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
         command:
         - runner.sh
         args:
@@ -340,7 +339,7 @@ presubmits:
       workdir: true
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
         command:
         - runner.sh
         - kubetest
@@ -399,7 +398,7 @@ presubmits:
         workdir: false
     spec:
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
           command:
             - runner.sh
             - ./scripts/ci-entrypoint.sh
@@ -461,7 +460,7 @@ presubmits:
         workdir: false
     spec:
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
           command:
             - runner.sh
             - ./scripts/ci-entrypoint.sh
@@ -506,7 +505,7 @@ presubmits:
         workdir: false
     spec:
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
           command:
             - runner.sh
             - ./scripts/ci-entrypoint.sh
@@ -562,7 +561,7 @@ presubmits:
         workdir: false
     spec:
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
           command:
             - runner.sh
             - ./scripts/ci-entrypoint.sh
@@ -607,7 +606,7 @@ presubmits:
         workdir: false
     spec:
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
           command:
             - runner.sh
             - ./scripts/ci-entrypoint.sh
@@ -653,12 +652,12 @@ presubmits:
         workdir: true
       - org: kubernetes-sigs
         repo: cloud-provider-azure
-        base_ref: release-1.26
+        base_ref: release-1.28
         path_alias: sigs.k8s.io/cloud-provider-azure
         workdir: false
     spec:
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
           command:
             - runner.sh
             - ./scripts/ci-entrypoint.sh
@@ -682,7 +681,7 @@ presubmits:
             - name: DISABLE_ZONE # azurefile-csi-driver config
               value: "true"
             - name: KUBERNETES_VERSION # CAPZ config
-              value: "latest-1.26"
+              value: "latest-1.28"
             - name: WORKER_MACHINE_COUNT
               value: "0" # Don't create any linux worker nodes
     annotations:
@@ -713,7 +712,7 @@ presubmits:
         workdir: false
     spec:
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
           command:
             - runner.sh
             - ./scripts/ci-entrypoint.sh
@@ -766,7 +765,7 @@ presubmits:
         workdir: false
     spec:
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
           command:
             - runner.sh
             - ./scripts/ci-entrypoint.sh
@@ -820,12 +819,12 @@ presubmits:
         workdir: true
       - org: kubernetes-sigs
         repo: cloud-provider-azure
-        base_ref: release-1.26
+        base_ref: release-1.29
         path_alias: sigs.k8s.io/cloud-provider-azure
         workdir: false
     spec:
       containers:
-        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240329-fc17bdd16b-master
+        - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-master
           command:
             - runner.sh
             - ./scripts/ci-entrypoint.sh
@@ -841,7 +840,7 @@ presubmits:
             - name: NODE_MACHINE_TYPE # CAPZ config
               value: "Standard_D2s_v3"
             - name: KUBERNETES_VERSION # CAPZ config
-              value: "latest-1.26"
+              value: "latest-1.29"
     annotations:
       testgrid-dashboards: provider-azure-azurefile-csi-driver
       testgrid-tab-name: pull-azurefile-csi-driver-e2e-capz
