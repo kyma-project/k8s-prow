@@ -13,7 +13,7 @@ presubmits:
     path_alias: sigs.k8s.io/cluster-api-provider-vsphere
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-1.28
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240408-d4d9f8e6b8-1.28
         command:
         - runner.sh
         args:
@@ -41,7 +41,7 @@ presubmits:
     path_alias: sigs.k8s.io/cluster-api-provider-vsphere
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-1.28
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240408-d4d9f8e6b8-1.28
         command:
         - runner.sh
         args:
@@ -72,7 +72,7 @@ presubmits:
     path_alias: sigs.k8s.io/cluster-api-provider-vsphere
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-1.28
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240408-d4d9f8e6b8-1.28
         resources:
           limits:
             cpu: 2
@@ -104,7 +104,7 @@ presubmits:
     path_alias: sigs.k8s.io/cluster-api-provider-vsphere
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-1.28
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240408-d4d9f8e6b8-1.28
         # we need privileged mode in order to do docker in docker
         securityContext:
           privileged: true
@@ -127,7 +127,7 @@ presubmits:
       testgrid-tab-name: pr-test-integration-release-1-9
       description: Runs integration tests
 
-  - name: pull-cluster-api-provider-vsphere-e2e-blocking-release-1-9
+  - name: pull-cluster-api-provider-vsphere-e2e-govmomi-blocking-release-1-9
     branches:
     - ^release-1.9$
     labels:
@@ -143,7 +143,7 @@ presubmits:
     max_concurrency: 3
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-1.28
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240408-d4d9f8e6b8-1.28
         command:
         - runner.sh
         args:
@@ -162,10 +162,10 @@ presubmits:
             memory: "6Gi"
     annotations:
       testgrid-dashboards: vmware-cluster-api-provider-vsphere, sig-cluster-lifecycle-cluster-api-provider-vsphere
-      testgrid-tab-name: pr-e2e-blocking-release-1-9
+      testgrid-tab-name: pr-e2e-govmomi-blocking-release-1-9
       description: Runs only PR Blocking e2e tests
 
-  - name: pull-cluster-api-provider-vsphere-e2e-release-1-9
+  - name: pull-cluster-api-provider-vsphere-e2e-govmomi-release-1-9
     branches:
     - ^release-1.9$
     labels:
@@ -181,7 +181,7 @@ presubmits:
     max_concurrency: 3
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-1.28
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240408-d4d9f8e6b8-1.28
         command:
         - runner.sh
         args:
@@ -200,10 +200,10 @@ presubmits:
             memory: "6Gi"
     annotations:
       testgrid-dashboards: vmware-cluster-api-provider-vsphere, sig-cluster-lifecycle-cluster-api-provider-vsphere
-      testgrid-tab-name: pr-e2e-release-1-9
+      testgrid-tab-name: pr-e2e-govmomi-release-1-9
       description: Runs all e2e tests
 
-  - name: pull-cluster-api-provider-vsphere-e2e-upgrade-1-29-1-30-release-1-9
+  - name: pull-cluster-api-provider-vsphere-e2e-govmomi-upgrade-1-29-1-30-release-1-9
     labels:
       preset-dind-enabled: "true"
       preset-cluster-api-provider-vsphere-e2e-config: "true"
@@ -217,7 +217,7 @@ presubmits:
     path_alias: sigs.k8s.io/cluster-api-provider-vsphere
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-1.28
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240408-d4d9f8e6b8-1.28
         command:
         - runner.sh
         args:
@@ -240,9 +240,9 @@ presubmits:
             memory: "6Gi"
     annotations:
       testgrid-dashboards: vmware-cluster-api-provider-vsphere, sig-cluster-lifecycle-cluster-api-provider-vsphere
-      testgrid-tab-name: pr-e2e-release-1-9-1-29-1-30
+      testgrid-tab-name: pr-e2e-govmomi-release-1-9-1-29-1-30
 
-  - name: pull-cluster-api-provider-vsphere-e2e-conformance-release-1-9
+  - name: pull-cluster-api-provider-vsphere-e2e-govmomi-conformance-release-1-9
     branches:
     - ^release-1.9$
     labels:
@@ -256,7 +256,7 @@ presubmits:
     max_concurrency: 3
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-1.28
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240408-d4d9f8e6b8-1.28
         command:
         - runner.sh
         args:
@@ -275,10 +275,10 @@ presubmits:
             memory: "6Gi"
     annotations:
       testgrid-dashboards: vmware-cluster-api-provider-vsphere, sig-cluster-lifecycle-cluster-api-provider-vsphere
-      testgrid-tab-name: pr-e2e-conformance-release-1-9
+      testgrid-tab-name: pr-e2e-govmomi-conformance-release-1-9
       description: Runs conformance tests for CAPV
 
-  - name: pull-cluster-api-provider-vsphere-e2e-conformance-ci-latest-release-1-9
+  - name: pull-cluster-api-provider-vsphere-e2e-govmomi-conformance-ci-latest-release-1-9
     branches:
     - ^release-1.9$
     labels:
@@ -292,7 +292,7 @@ presubmits:
     max_concurrency: 3
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240405-68dde9badf-1.28
+      - image: gcr.io/k8s-staging-test-infra/kubekins-e2e:v20240408-d4d9f8e6b8-1.28
         command:
         - runner.sh
         args:
@@ -311,5 +311,5 @@ presubmits:
             memory: "6Gi"
     annotations:
       testgrid-dashboards: vmware-cluster-api-provider-vsphere, sig-cluster-lifecycle-cluster-api-provider-vsphere
-      testgrid-tab-name: pr-e2e-conformance-ci-latest-release-1-9
+      testgrid-tab-name: pr-e2e-govmomi-conformance-ci-latest-release-1-9
       description: Runs conformance tests with K8S ci latest for CAPV
